@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Travel to Euro 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: assessor de viagem prático, calmo, com números à vista
+   IDEA: cartão de embarque + carimbos de passaporte sobre azulejo
+   PICTURE: cartão de embarque FOR → LIS · MAD · PAR com arco de rota e contagem regressiva
+   COLOUR and TYPE: azul azulejo dominante, branco, terracota como acento; Familjen Grotesk + Figtree
+   LAYOUT: faixa azul com cartão + números-chave; depois câmbio, passagens, orçamento, lançamentos */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#0e1626);--ink:light-dark(#122033,#e8eef8);--mut:light-dark(#5a6a80,#9fb0c8);--line:light-dark(#dfe6f0,#243350);--card:light-dark(#f4f7fc,#15203a);--blue:#1b4aa0;--blue2:#163c84;--acc:#d9542b;--ok:light-dark(#1f7a4d,#5fcf95);--bad:light-dark(#b3261e,#ff8a7f)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Figtree,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:"Familjen Grotesk",Figtree,sans-serif;line-height:1.05;text-wrap:balance;margin:0}
+h1{font-size:clamp(32px,5vw,50px)}h2{font-size:clamp(24px,3vw,32px);margin-bottom:6px}h3{font-size:18px}
+.band{padding:clamp(28px,4vw,56px) max(5vw,16px)}.wrap{max-width:1240px;margin:0 auto}
+.hero{background:var(--blue);color:#fff;background-image:radial-gradient(circle at 12px 12px,rgba(255,255,255,.07) 2px,transparent 3px);background-size:24px 24px}
+.hero .sub{color:#cfdcf5;margin:8px 0 0}
+.top{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:28px;align-items:stretch;margin-top:24px}
+.pass{background:#fff;color:#122033;border-radius:18px;display:grid;grid-template-columns:minmax(0,1fr) 128px;box-shadow:0 18px 40px rgba(0,0,0,.25);overflow:hidden}
+.pass .main{padding:20px 22px}.pass .stub{border-left:2px dashed #c9d4e6;padding:20px 14px;background:#f4f7fc;display:flex;flex-direction:column;justify-content:center;text-align:center}
+.stub b{font:700 46px/1 "Familjen Grotesk";color:var(--acc)}.stub span{font-size:13px;color:#5a6a80}
+.lbl{font-size:13px;color:var(--mut)}.pass .lbl{color:#5a6a80}
+.fig{position:relative;min-height:150px}.fig>svg{position:absolute;inset:0;width:100%;height:100%}
+.kp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.k{background:var(--blue2);border-radius:14px;padding:14px 16px}
+.k .v{font:700 clamp(22px,3vw,30px)/1.1 "Familjen Grotesk";white-space:nowrap}.k .lbl{color:#cfdcf5}.k .d{font-size:13px;color:#cfdcf5}
+.bar{height:8px;border-radius:9px;background:rgba(255,255,255,.2);overflow:hidden;margin-top:8px}.bar i{display:block;height:100%;background:var(--acc);border-radius:9px}
+nav.scroll{display:flex;gap:8px;padding:12px max(5vw,16px);border-bottom:1px solid var(--line);background:var(--bg);overflow-x:auto}
+nav a{flex:none;color:var(--ink);text-decoration:none;padding:8px 12px;border-radius:99px;background:var(--card);font-weight:600;font-size:14px}
+@media(min-width:900px){nav.scroll{position:sticky;top:0;z-index:5}}
+.alerts{display:grid;gap:8px;margin-top:14px}
+.al{display:flex;gap:12px;align-items:flex-start;background:#fff;color:#122033;border-left:5px solid var(--acc);border-radius:10px;padding:10px 12px}
+.al p{margin:0;flex:1}.al small{color:#5a6a80}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}
+.panel{border:1px solid var(--line);border-radius:16px;padding:20px}
+.chart{min-height:220px;margin:10px 0}
+table{width:100%;border-collapse:collapse;font-size:15px}th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:middle}th{font-size:13px;color:var(--mut);font-weight:600}
+td.n,th.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+form.row{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;align-items:end}
+form.row label{display:flex;flex-direction:column;font-size:13px;color:var(--mut);gap:3px;flex:1 1 130px}
+input,select{font:16px Figtree,sans-serif;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);min-height:44px;width:100%}
+input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+button{font:600 15px Figtree,sans-serif;min-height:44px;padding:0 16px;border-radius:10px;border:0;background:var(--blue);color:#fff;cursor:pointer}
+button.ghost{background:transparent;color:var(--mut);border:1px solid var(--line);min-height:36px;padding:0 10px;font-size:13px}
+button.ghost.warn{color:var(--bad);border-color:var(--bad)}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--card);color:var(--mut);white-space:nowrap}
+.tag.ok{background:light-dark(#dff3e8,#183a2a);color:var(--ok)}.tag.acc{background:light-dark(#fbe3da,#3e2015);color:var(--acc)}
+.cat{display:grid;grid-template-columns:minmax(0,9em) minmax(0,1fr) 9.5em;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.cat .track{height:12px;background:var(--card);border-radius:9px;overflow:hidden;position:relative}.cat .track i{position:absolute;inset:0 auto 0 0;background:var(--blue);border-radius:9px}.cat .track i.over{background:var(--acc)}
+.cat input{min-height:36px;padding:4px 8px;text-align:right;font-size:15px}
+.muted{color:var(--mut);font-size:14px}.big{font:700 28px/1.1 "Familjen Grotesk";white-space:nowrap}
+.sums{display:flex;flex-wrap:wrap;gap:24px;margin:8px 0 4px}
+.todo{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}.todo input{width:22px;min-height:22px;flex:none}.todo span{flex:1}.todo.done span{text-decoration:line-through;color:var(--mut)}
+.note{background:var(--card);border-radius:12px;padding:12px 14px;font-size:14px;color:var(--mut)}
+#status{font-size:14px;color:#cfdcf5;margin-top:10px}
+#auth{margin-top:10px;color:#cfdcf5;font-size:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}#auth form{width:100%;margin:0}#auth label{color:#cfdcf5}
+.hero button.ghost{color:#fff;border-color:rgba(255,255,255,.5)}.hero #auth button{background:#fff;color:var(--blue)}.hero #auth button.ghost{background:transparent;color:#fff}
+.scroll{overflow-x:auto}
+.sig{border-radius:14px;padding:16px 18px;margin:12px 0;background:var(--card);display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 16px;align-items:center}.sig b{font:700 clamp(26px,4vw,36px)/1 "Familjen Grotesk";grid-row:span 2}.sig.buy{background:light-dark(#dff3e8,#183a2a)}.sig.buy b{color:var(--ok)}.sig.wait b{color:var(--mut)}.sig p{margin:0}.sig .muted{font-size:13px}
+@media(max-width:860px){.top,.grid2{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.pass{grid-template-columns:minmax(0,1fr)}.pass .stub{border-left:0;border-top:2px dashed #c9d4e6;flex-direction:row;gap:12px;align-items:center;justify-content:flex-start}.cat{grid-template-columns:minmax(0,1fr) 8em}.cat .track{grid-column:1/-1;order:3}
+table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--line)}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:8em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:7.5em;margin-inline-start:-8em;color:var(--mut)}.stack td:empty{display:none}}
+@media(prefers-reduced-motion:no-preference){.bar i,.cat .track i{transition:width .6s ease}}
+</style><script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script></head>
+<body>
+<header class="band hero"><div class="wrap">
+  <h1>Travel To Euro 2027 · September 2027</h1>
+  <p class="sub" id="sub">Portugal, Espanha e França — planejamento, câmbio e passagens num só lugar.</p>
+  <div class="top">
+    <div class="pass">
+      <div class="main">
+        <div class="lbl">Cartão de embarque da família</div>
+        <div class="fig" id="route" aria-label="Rota da viagem"><svg></svg></div>
+        <div id="passinfo" class="lbl"></div>
+      </div>
+      <div class="stub"><b id="days">—</b><span>dias para embarcar</span></div>
+    </div>
+    <div>
+      <div class="kp">
+        <div class="k"><div class="lbl">Juntado</div><div class="v" id="kJunt">—</div><div class="bar"><i id="kJuntBar" style="width:0"></i></div><div class="d" id="kJuntD"></div></div>
+        <div class="k"><div class="lbl">Euro comercial</div><div class="v" id="kEur">—</div><div class="d" id="kEurD"></div></div>
+        <div class="k"><div class="lbl">Melhor passagem (adulto, ida e volta)</div><div class="v" id="kVoo">—</div><div class="d" id="kVooD"></div></div>
+        <div class="k"><div class="lbl">Comprometido / pago</div><div class="v" id="kGast">—</div><div class="d" id="kGastD"></div></div>
+      </div>
+      <div class="alerts" id="alerts"></div>
+      <div id="status">Carregando dados…</div>
+      <div id="auth"></div>
+    </div>
+  </div>
+</div></header>
+<nav class="scroll"><a href="#cambio">Câmbio</a><a href="#passagens">Passagens</a><a href="#orcamento">Orçamento</a><a href="#lancamentos">Compras</a><a href="#poupanca">Poupança</a><a href="#checklist">Checklist</a><a href="#ajustes">Ajustes</a></nav>
+
+<section class="band"><div class="wrap grid2">
+  <div class="panel" id="cambio">
+    <h2>Câmbio do euro</h2>
+    <p class="muted" id="cambioTxt">O monitor diário registra a cotação comercial aqui.</p>
+    <div class="sig" id="sig"><b>—</b><p>Registre a primeira compra de euros para o painel acompanhar a sua média.</p></div>
+    <div class="fig chart" id="eurChart"><svg></svg></div>
+    <h3>Euros já comprados</h3>
+    <div class="sums"><div><div class="lbl">Total em euros</div><div class="big" id="eTot">€ 0</div></div><div><div class="lbl">Taxa média paga</div><div class="big" id="eMed">—</div></div><div><div class="lbl">Meta em euros</div><div class="big" id="eMeta">—</div></div></div>
+    <form class="row" id="fEuro"><label>Euros<input name="eur" type="number" step="0.01" min="0" required></label><label>Taxa paga (R$)<input name="taxa" type="number" step="0.0001" min="0" required></label><label>Onde<input name="onde" placeholder="Wise, Nomad, casa de câmbio…"></label><button>Registrar compra</button></form>
+    <div class="scroll"><table class="stack" id="tEuro"><thead><tr><th>Data</th><th class="n">Euros</th><th class="n">Taxa</th><th class="n">Custo</th><th>Onde</th><th></th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <div class="panel" id="passagens">
+    <h2>Passagens</h2>
+    <p class="muted" id="vooTxt">Preços por adulto, ida e volta. O monitor acrescenta o que encontrar; você pode anotar cotações também.</p>
+    <form class="row" id="fVoo"><label>Rota<input name="rota" placeholder="FOR → LIS" required></label><label>Companhia<input name="cia" placeholder="TAP"></label><label>Preço adulto (R$)<input name="preco" type="number" step="1" min="0" required></label><label>Datas<input name="datas" placeholder="05/09 – 15/09/2027"></label><button>Anotar</button></form>
+    <div class="scroll"><table class="stack" id="tVoo"><thead><tr><th>Visto em</th><th>Rota</th><th>Cia / datas</th><th class="n">Adulto</th><th class="n">Família*</th><th></th></tr></thead><tbody></tbody></table></div>
+    <p class="muted">*Estimativa: adultos × preço + bebê de colo ≈ 10% da tarifa (as taxas variam por companhia).</p>
+  </div>
+</div></section>
+
+<section class="band" style="background:var(--card)" id="orcamento"><div class="wrap">
+  <h2>Orçamento por categoria</h2>
+  <p class="muted">Planejado (editável) contra o que já foi comprometido. Valores em reais; compras em euro são convertidas pela taxa informada ou pela cotação atual.</p>
+  <div id="cats"></div>
+  <div class="sums"><div><div class="lbl">Planejado total</div><div class="big" id="oPlan">—</div></div><div><div class="lbl">Comprometido</div><div class="big" id="oComp">—</div></div><div><div class="lbl">Falta reservar</div><div class="big" id="oFalta">—</div></div></div>
+</div></section>
+
+<section class="band" id="lancamentos"><div class="wrap">
+  <h2>Compras e reservas</h2>
+  <form class="row" id="fGasto">
+    <label style="flex:2 1 200px">Descrição<input name="desc" required placeholder="Hotel em Lisboa, 3 noites"></label>
+    <label>Categoria<select name="cat" id="selCat"></select></label>
+    <label>Valor<input name="valor" type="number" step="0.01" min="0" required></label>
+    <label style="flex:0 1 90px">Moeda<select name="moeda"><option>BRL</option><option>EUR</option></select></label>
+    <label>Situação<select name="status"><option value="pago">Pago</option><option value="reservado">Reservado (a pagar)</option></select></label>
+    <button>Lançar</button>
+  </form>
+  <div class="scroll"><table class="stack" id="tGasto"><thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Situação</th><th class="n">Valor</th><th class="n">Em R$</th><th></th></tr></thead><tbody></tbody></table></div>
+</div></section>
+
+<section class="band" style="background:var(--card)"><div class="wrap grid2">
+  <div id="poupanca">
+    <h2>Poupança da viagem</h2>
+    <div class="sums"><div><div class="lbl">Depositado</div><div class="big" id="pTot">—</div></div><div><div class="lbl">Saldo livre em R$</div><div class="big" id="pSaldo">—</div></div></div>
+    <p class="muted">Saldo livre = depositado − compras pagas − reais usados para comprar euros.</p>
+    <form class="row" id="fDep"><label>Valor (R$)<input name="valor" type="number" step="0.01" required></label><label style="flex:2 1 180px">Nota<input name="nota" placeholder="13º, sobra do mês…"></label><button>Depositar</button></form>
+    <div class="scroll"><table class="stack" id="tDep"><thead><tr><th>Data</th><th>Nota</th><th class="n">Valor</th><th></th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <div id="checklist">
+    <h2>Checklist</h2>
+    <div id="todos"></div>
+    <form class="row" id="fTodo"><label style="flex:3 1 200px">Nova tarefa<input name="txt" required></label><button>Adicionar</button></form>
+  </div>
+</div></section>
+
+<section class="band" id="ajustes"><div class="wrap">
+  <h2>Ajustes da viagem</h2>
+  <form class="row" id="fCfg">
+    <label>Embarque<input name="ida" type="date"></label><label>Retorno<input name="volta" type="date"></label>
+    <label>Origem<input name="origem"></label><label style="flex:2 1 200px">Destinos<input name="destinos"></label>
+    <label>Adultos<input name="adultos" type="number" min="1"></label><label>Bebês de colo<input name="bebes" type="number" min="0"></label>
+    <label>Meta a juntar (R$)<input name="meta" type="number" step="100"></label>
+    <label>Meta em euros (€)<input name="metaEuro" type="number" step="50"></label>
+    <label>Acréscimo sobre o comercial (%) — vazio = calcular pelas suas compras<input name="spread" type="number" step="0.1" min="0"></label>
+    <label>Antes da 1ª compra: euro abaixo de (R$)<input name="alvoEuro" type="number" step="0.01"></label>
+    <label>Alerta: passagem adulto abaixo de (R$)<input name="alvoVoo" type="number" step="50"></label>
+    <button>Salvar ajustes</button>
+  </form>
+  <p class="note">Os alertas chegam por notificação do monitor diário do Claude, que consulta o câmbio e as passagens e grava tudo aqui. A regra principal: quando o euro comercial, somado ao acréscimo que você paga na compra (IOF e margem da corretora), ficar abaixo da sua taxa média, o painel e o monitor avisam que é hora de comprar mais. Antes da primeira compra, vale o limite fixo.</p>
+</div></section>
+
+<script>
+{
+const CATS=["Passagens","Hospedagem","Transporte na Europa","Alimentação","Passeios e ingressos","Seguro viagem","Documentos","Compras","Outros"];
+const S={cfg:{},cambio:[],voos:[],alertas:[],gastos:[],deps:[],euros:[],todos:[]};
+const SUPABASE_URL="https://hmeurazpzjmjvodspzpl.supabase.co";
+const SUPABASE_KEY="sb_publishable_JU3n5cTjvHlRS4Q5N5Q7iw_3-iy9EOd"; // Supabase > Project Settings > API Keys > Publishable key (pode ficar no site)
+let sb=null,sess=null,canWrite=false;
+const $=s=>document.querySelector(s);
+const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const num=v=>{const n=Number(v);return isFinite(n)?n:0};
+const brl=v=>"R$ "+num(v).toLocaleString("pt-BR",{minimumFractionDigits:0,maximumFractionDigits:0});
+const brl2=v=>"R$ "+num(v).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:4});
+const eur=v=>"€ "+num(v).toLocaleString("pt-BR",{maximumFractionDigits:2});
+const today=()=>new Date().toISOString().slice(0,10);
+const dBR=s=>{if(!s)return"";const[y,m,d]=String(s).slice(0,10).split("-");return d?`${d}/${m}/${y}`:esc(s)};
+$("#selCat").innerHTML=CATS.map(c=>`<option>${c}</option>`).join("");
+
+const eurNow=()=>{const c=S.cambio[S.cambio.length-1];return c?num(c.comercial):0};
+const emBRL=g=>g.moeda==="EUR"?num(g.valor)*(num(g.taxa)||eurNow()):num(g.valor);
+const spr=()=>{if(num(S.cfg.spread)>0)return num(S.cfg.spread);const xs=S.euros.filter(x=>num(x.comercial_dia)>0&&num(x.taxa)>0).map(x=>(num(x.taxa)/num(x.comercial_dia)-1)*100);return xs.length?Math.max(0,Math.round(xs.reduce((a,b)=>a+b,0)/xs.length*10)/10):1.5};
+const media=()=>{const t=S.euros.reduce((a,x)=>a+num(x.eur),0);return t?S.euros.reduce((a,x)=>a+num(x.eur)*num(x.taxa),0)/t:0};
+const limite=()=>{const m=media();return m?m/(1+spr()/100):num(S.cfg.alvoEuro)};
+const delBtn=(col,id)=>canWrite?`<button class="ghost" data-del="${esc(col)}" data-id="${esc(id)}">Excluir</button>`:"";
+
+function drawRoute(){const s=$("#route svg"),W=s.clientWidth,H=s.clientHeight;if(!W)return;
+  const c=S.cfg,o=esc(c.origem||"FOR"),ds=String(c.destinos||"Lisboa, Madri, Paris").split(",").map(x=>x.trim()).filter(Boolean).slice(0,4);
+  const x0=34,y0=H-34,pts=ds.map((d,i)=>[W*0.55+(W*0.4-30)*(ds.length>1?i/(ds.length-1):0.5),34+(i%2)*26]);
+  let h=`<circle cx="${x0}" cy="${y0}" r="7" fill="#1b4aa0"/><text x="${x0-6}" y="${y0+26}" font-size="15" font-weight="700" fill="#122033">${o}</text>`;
+  const [fx,fy]=pts[0]||[W-40,40];
+  h+=`<path d="M${x0},${y0} Q${W*0.32},${-10} ${fx},${fy}" fill="none" stroke="#d9542b" stroke-width="3" stroke-dasharray="7 7"/>`;
+  for(let i=1;i<pts.length;i++)h+=`<line x1="${pts[i-1][0]}" y1="${pts[i-1][1]}" x2="${pts[i][0]}" y2="${pts[i][1]}" stroke="#1b4aa0" stroke-width="2"/>`;
+  pts.forEach(([x,y],i)=>{h+=`<circle cx="${x}" cy="${y}" r="16" fill="#fff" stroke="#1b4aa0" stroke-width="2"/><text x="${x}" y="${y+5}" text-anchor="middle" font-size="13" font-weight="700" fill="#1b4aa0">${i+1}</text>`;
+    if(W>380)h+=`<text x="${x}" y="${y+38}" text-anchor="middle" font-size="13" fill="#5a6a80">${esc(ds[i])}</text>`});
+  s.innerHTML=h}
+const ro1=new ResizeObserver(drawRoute);ro1.observe($("#route"));
+
+function drawEur(){const s=$("#eurChart svg"),W=s.clientWidth,H=s.clientHeight;if(!W)return;
+  const d=S.cambio.slice(-120);if(d.length<2){s.innerHTML=`<text x="12" y="30" fill="currentColor" opacity=".6" font-size="14">O gráfico aparece com duas ou mais cotações registradas.</text>`;return}
+  const al=limite(),vs=d.map(x=>num(x.comercial)).concat(al?[al]:[]),mn=Math.min(...vs)-0.03,mx=Math.max(...vs)+0.03;
+  const L=W<520?8:52,R=12,T=12,B=26,X=i=>L+(W-L-R)*i/(d.length-1),Y=v=>T+(H-T-B)*(1-(v-mn)/(mx-mn));
+  let h="";if(W>=520)for(let k=0;k<4;k++){const v=mn+(mx-mn)*k/3;h+=`<line x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}" stroke="currentColor" opacity=".1"/><text x="${L-6}" y="${Y(v)+4}" text-anchor="end" font-size="12" fill="currentColor" opacity=".6">${v.toFixed(2)}</text>`}
+  if(al)h+=`<line x1="${L}" x2="${W-R}" y1="${Y(al)}" y2="${Y(al)}" stroke="${media()?"#1f9a5f":"#d9542b"}" stroke-dasharray="5 5" stroke-width="2"/><text x="${W-R}" y="${Y(al)-6}" text-anchor="end" font-size="12" fill="${media()?"#1f9a5f":"#d9542b"}">${media()?"compra abaixo da média":"alerta"} ${al.toFixed(2)}</text>`;
+  h+=`<polyline fill="none" stroke="#1b4aa0" stroke-width="2.5" points="${d.map((x,i)=>X(i)+","+Y(num(x.comercial))).join(" ")}"/>`;
+  const l=d[d.length-1];h+=`<circle cx="${X(d.length-1)}" cy="${Y(num(l.comercial))}" r="5" fill="#1b4aa0"/>`;
+  h+=`<text x="${L}" y="${H-6}" font-size="12" fill="currentColor" opacity=".6">${dBR(d[0].data)}</text><text x="${W-R}" y="${H-6}" text-anchor="end" font-size="12" fill="currentColor" opacity=".6">${dBR(l.data)}</text>`;
+  s.innerHTML=h}
+const ro2=new ResizeObserver(drawEur);ro2.observe($("#eurChart"));
+
+function render(){const c=S.cfg,ad=num(c.adultos)||2,bb=num(c.bebes);
+  // hero
+  if(c.ida){const n=Math.ceil((new Date(c.ida+"T12:00")-new Date())/864e5);$("#days").textContent=n>0?n:"0"}
+  $("#passinfo").textContent=`${ad} adulto${ad>1?"s":""}${bb?` + ${bb} bebê`:""} · ${c.ida?dBR(c.ida):"data a definir"}${c.volta?" a "+dBR(c.volta):""}`;
+  const dep=S.deps.reduce((a,x)=>a+num(x.valor),0),plan=CATS.reduce((a,k)=>a+num((c.orc||{})[k]),0),meta=num(c.meta)||plan;
+  const comp=S.gastos.reduce((a,g)=>a+emBRL(g),0),pago=S.gastos.filter(g=>g.status==="pago").reduce((a,g)=>a+emBRL(g),0);
+  const eTot=S.euros.reduce((a,x)=>a+num(x.eur),0),eCusto=S.euros.reduce((a,x)=>a+num(x.eur)*num(x.taxa),0);
+  $("#kJunt").textContent=brl(dep);$("#kJuntBar").style.width=(meta?Math.min(100,dep/meta*100):0)+"%";$("#kJuntD").textContent=meta?`${Math.round(dep/meta*100)}% da meta de ${brl(meta)}`:"Defina a meta em Ajustes";
+  const ce=S.cambio[S.cambio.length-1],cp=S.cambio[S.cambio.length-2];
+  if(ce){$("#kEur").textContent=brl2(ce.comercial);const v=cp?(num(ce.comercial)/num(cp.comercial)-1)*100:null;$("#kEurD").textContent=`${dBR(ce.data)}${v!==null?` · ${v>0?"+":""}${v.toFixed(2)}% vs anterior`:""}${eTot?` · sua média ${brl2(eCusto/eTot)}`:c.alvoEuro?` · alerta abaixo de ${brl2(c.alvoEuro)}`:""}`}
+  const vs=[...S.voos].sort((a,b)=>num(a.preco)-num(b.preco)),best=vs[0];
+  if(best){$("#kVoo").textContent=brl(best.preco);$("#kVooD").textContent=`${best.rota||""} · ${best.cia||""} · visto ${dBR(best.data)}${c.alvoVoo?` · alvo ${brl(c.alvoVoo)}`:""}`}
+  $("#kGast").textContent=brl(comp);$("#kGastD").textContent=`${brl(pago)} já pago · ${S.gastos.length} lançamento${S.gastos.length===1?"":"s"}`;
+  // alerts
+  const al=[];
+  const med=eTot?eCusto/eTot:0,lim=limite(),abaixo=ce&&lim&&num(ce.comercial)<lim,estC=ce?num(ce.comercial)*(1+spr()/100):0;
+  if(abaixo)al.push({texto:med?`Euro abaixo da sua média: comprar hoje sai por cerca de ${brl2(estC)} (comercial ${brl2(ce.comercial)} + ${spr()}%), contra a sua média de ${brl2(med)}. Hora de comprar mais.`:`Euro em ${brl2(ce.comercial)}, abaixo do seu limite de ${brl2(c.alvoEuro)}. Bom momento para a primeira compra.`,data:ce.data});
+  if(best&&c.alvoVoo&&num(best.preco)<=num(c.alvoVoo))al.push({texto:`Passagem ${best.rota||""} por ${brl(best.preco)} por adulto, abaixo do alvo de ${brl(c.alvoVoo)}.`,data:best.data});
+  S.alertas.filter(a=>!a.lido).slice(0,4).forEach(a=>al.push(a));
+  $("#alerts").innerHTML=al.map(a=>`<div class="al"><p>${esc(a.texto)}<br><small>${dBR(a.data)}</small></p>${a._id&&canWrite?`<button class="ghost" data-lido="${esc(a._id)}">Ok</button>`:""}</div>`).join("");
+  // cambio
+  $("#cambioTxt").textContent=ce?`Última cotação comercial: ${brl2(ce.comercial)} em ${dBR(ce.data)}${ce.turismo?` · turismo ${brl2(ce.turismo)}`:""}. O euro em espécie ou cartão custa alguns centavos a mais que o comercial.`:"Ainda sem cotações registradas.";
+  drawEur();
+  {const sg=$("#sig"),mE=num(c.metaEuro),falta=Math.max(0,mE-eTot),meses=c.ida?Math.max(1,Math.round((new Date(c.ida+"T12:00")-new Date())/2629800000)):0,parc=mE&&meses?falta/meses:0;
+   const extra=parc?` Faltam ${eur(falta)} para a meta: cerca de ${eur(parc)} por mês até o embarque.`:(mE?"":" Defina a meta em euros nos Ajustes para ver quanto comprar por mês.");
+   if(!ce){sg.className="sig";sg.innerHTML=`<b>—</b><p>Sem cotação registrada ainda.</p>`}
+   else if(!lim){sg.className="sig";sg.innerHTML=`<b>1ª compra</b><p>Registre a primeira compra para o painel passar a comparar com a sua média.</p><p class="muted">${esc(extra)}</p>`}
+   else{sg.className="sig "+(abaixo?"buy":"wait");sg.innerHTML=`<b>${abaixo?"Comprar":"Esperar"}</b><p>${med?`Comprar hoje ≈ ${brl2(estC)} · sua média ${brl2(med)}`:`Comercial ${brl2(ce.comercial)} · limite ${brl2(lim)}`}</p><p class="muted">${abaixo?"Abaixo da média: comprar agora reduz o custo médio.":`Compensa comprar com o comercial abaixo de ${brl2(lim)}.`}${esc(extra)}</p>`}}
+  $("#eMeta").textContent=num(c.metaEuro)?eur(c.metaEuro):"—";
+  $("#eTot").textContent=eur(eTot);$("#eMed").textContent=eTot?brl2(eCusto/eTot):"—";
+  $("#tEuro tbody").innerHTML=S.euros.map(x=>`<tr><td>${dBR(x.data)}</td><td class="n">${eur(x.eur)}</td><td class="n">${brl2(x.taxa)}</td><td class="n">${brl(num(x.eur)*num(x.taxa))}</td><td>${esc(x.onde)}</td><td>${delBtn("euros",x._id)}</td></tr>`).join("")||`<tr><td colspan="6" class="muted">Nenhuma compra de euro ainda. Comprar aos poucos dilui o risco do câmbio.</td></tr>`;
+  // voos
+  $("#tVoo tbody").innerHTML=vs.slice(0,30).map(x=>{const fam=num(x.preco)*ad+num(x.preco)*0.1*bb,ok=c.alvoVoo&&num(x.preco)<=num(c.alvoVoo);
+    const link=String(x.link||"").startsWith("https://")?` <a href="${esc(x.link)}" target="_blank" rel="noopener">ver</a>`:"";
+    return`<tr><td>${dBR(x.data)}<br><span class="tag ${x.origem==="monitor"?"":"acc"}">${x.origem==="monitor"?"monitor":"anotado"}</span></td><td>${esc(x.rota)}</td><td>${esc(x.cia)}${x.datas?`<br><span class="muted">${esc(x.datas)}</span>`:""}${x.obs?`<br><span class="muted">${esc(x.obs)}</span>`:""}${link}</td><td class="n">${brl(x.preco)}${ok?` <span class="tag ok">alvo</span>`:""}</td><td class="n">${brl(fam)}</td><td>${delBtn("voos",x._id)}</td></tr>`}).join("")||`<tr><td colspan="6" class="muted">Nenhuma cotação ainda.</td></tr>`;
+  // orçamento
+  const byCat={};S.gastos.forEach(g=>byCat[g.cat]=(byCat[g.cat]||0)+emBRL(g));
+  $("#cats").innerHTML=CATS.map(k=>{const p=num((c.orc||{})[k]),g=byCat[k]||0,w=p?Math.min(100,g/p*100):(g?100:0);
+    return`<div class="cat"><b>${k}</b><div class="track" title="${brl(g)} de ${brl(p)}"><i class="${g>p&&p?"over":""}" style="width:${w}%"></i></div><div><input type="number" step="100" aria-label="Planejado ${k}" data-orc="${k}" value="${p||""}" ${canWrite?"":"disabled"}><div class="muted" style="text-align:right">${brl(g)} usado</div></div></div>`}).join("");
+  $("#oPlan").textContent=brl(plan);$("#oComp").textContent=brl(comp);$("#oFalta").textContent=brl(Math.max(0,plan-comp));
+  // gastos
+  $("#tGasto tbody").innerHTML=[...S.gastos].sort((a,b)=>String(b.data).localeCompare(a.data)).map(g=>`<tr><td>${dBR(g.data)}</td><td>${esc(g.descricao)}</td><td>${esc(g.cat)}</td><td><span class="tag ${g.status==="pago"?"ok":"acc"}">${g.status==="pago"?"pago":"a pagar"}</span></td><td class="n">${g.moeda==="EUR"?eur(g.valor):brl2(g.valor)}</td><td class="n">${brl(emBRL(g))}</td><td>${delBtn("gastos",g._id)}</td></tr>`).join("")||`<tr><td colspan="7" class="muted">Nada lançado ainda. Comece pelos passaportes e pelo seguro viagem quando contratar.</td></tr>`;
+  // poupança
+  $("#pTot").textContent=brl(dep);$("#pSaldo").textContent=brl(dep-pago-eCusto);
+  $("#tDep tbody").innerHTML=[...S.deps].sort((a,b)=>String(b.data).localeCompare(a.data)).map(x=>`<tr><td>${dBR(x.data)}</td><td>${esc(x.nota)}</td><td class="n">${brl2(x.valor)}</td><td>${delBtn("depositos",x._id)}</td></tr>`).join("")||`<tr><td colspan="4" class="muted">Nenhum depósito registrado.</td></tr>`;
+  // todos
+  $("#todos").innerHTML=[...S.todos].sort((a,b)=>num(a.ordem)-num(b.ordem)).map(t=>`<div class="todo ${t.feito?"done":""}"><input type="checkbox" data-todo="${esc(t._id)}" ${t.feito?"checked":""} ${canWrite?"":"disabled"} aria-label="Concluída"><span>${esc(t.txt)}</span>${delBtn("tarefas",t._id)}</div>`).join("")||`<p class="muted">Sem tarefas.</p>`;
+  // cfg form
+  const f=$("#fCfg");if(!f.dataset.touched)["ida","volta","origem","destinos","adultos","bebes","meta","alvoEuro","alvoVoo","metaEuro","spread"].forEach(k=>{f.elements[k].value=c[k]??""});
+  drawRoute()}
+
+const msg=t=>{$("#status").textContent=t};
+const TABS={cambio:"cambio",voos:"voos",alertas:"alertas",gastos:"gastos",depositos:"deps",euros:"euros",tarefas:"todos"};
+const VAZIO=()=>({cfg:{},cambio:[],voos:[],alertas:[],gastos:[],deps:[],euros:[],todos:[]});
+const list=rows=>(rows||[]).map(r=>({...r,_id:r.id}));
+async function load(t){let q=sb.from(t).select("*");
+  if(t==="alertas")q=q.order("data",{ascending:false}).order("criado_em",{ascending:false}).limit(20);
+  else if(t==="cambio"||t==="euros")q=q.order("data").order("criado_em");
+  const{data,error}=await q;if(error)throw error;S[TABS[t]]=list(data)}
+async function loadCfg(){const{data,error}=await sb.from("cfg").select("dados").eq("id","main").maybeSingle();if(error)throw error;S.cfg=data?.dados||{}}
+async function loadAll(){try{await Promise.all([loadCfg(),...Object.keys(TABS).map(load)]);msg("");render()}catch(e){msg("Erro ao ler dados: "+(e&&e.message||e))}}
+async function write(fn){if(!sb||!sess){msg("Entre com seu e-mail para salvar.");return false}
+  if(!canWrite){msg("Seu e-mail ainda não tem acesso para salvar.");return false}
+  const{error}=await fn();if(error){msg("Não foi possível salvar: "+error.message);return false}
+  await loadAll();return true}
+
+function renderAuth(){const a=$("#auth");
+  if(sess)a.innerHTML=`<span>Conectado como <b>${esc(sess.user.email)}</b></span><button type="button" class="ghost" id="sair">Sair</button>`;
+  else if(sb)a.innerHTML=`<form class="row" id="fLogin"><label>E-mail<input name="email" type="email" autocomplete="email" required></label><label>Senha<input name="senha" type="password" autocomplete="current-password" minlength="6" required></label><button name="modo" value="entrar">Entrar</button><button name="modo" value="criar" class="ghost">Criar conta</button></form>`;
+  else a.innerHTML=""}
+async function login(v,modo){const email=String(v.email||"").trim().toLowerCase(),password=String(v.senha||"");msg(modo==="criar"?"Criando conta…":"Entrando…");
+  const r=modo==="criar"?await sb.auth.signUp({email,password}):await sb.auth.signInWithPassword({email,password});
+  if(r.error){msg(r.error.message==="Invalid login credentials"?"E-mail ou senha incorretos.":r.error.message);return}
+  if(modo==="criar"&&!r.data.session)msg("Conta criada. Confirme pelo link enviado ao e-mail e depois clique em Entrar.")}
+
+let ch=null,rt=null,lastUid=null;
+function assinar(){if(ch)return;ch=sb.channel("viagem");
+  ["cfg",...Object.keys(TABS)].forEach(t=>ch.on("postgres_changes",{event:"*",schema:"public",table:t},()=>{clearTimeout(rt);rt=setTimeout(loadAll,400)}));
+  ch.subscribe()}
+async function onSess(s){sess=s;renderAuth();
+  if(!s){lastUid=null;if(ch){sb.removeChannel(ch);ch=null}Object.assign(S,VAZIO());canWrite=false;render();msg("Entre com seu e-mail para ver e editar o planejamento.");return}
+  if(lastUid===s.user.id)return;lastUid=s.user.id;msg("Carregando dados…");
+  const{data:m,error}=await sb.rpc("e_membro");canWrite=!error&&m===true;
+  if(!canWrite){render();msg(error?"Erro ao verificar acesso: "+error.message:`O e-mail ${s.user.email} ainda não tem acesso. Inclua-o na tabela "membros" do Supabase.`);return}
+  await loadAll();assinar()}
+
+document.addEventListener("submit",async ev=>{const f=ev.target;ev.preventDefault();const v=Object.fromEntries(new FormData(f));let ok=false;
+  if(f.id==="fLogin"){await login(v,ev.submitter&&ev.submitter.value);return}
+  if(f.id==="fEuro")ok=await write(()=>sb.from("euros").insert({data:today(),eur:num(v.eur),taxa:num(v.taxa),onde:v.onde||"",comercial_dia:eurNow()||null}));
+  if(f.id==="fVoo")ok=await write(()=>sb.from("voos").insert({data:today(),rota:v.rota,cia:v.cia||"",preco:num(v.preco),datas:v.datas||"",origem:"manual"}));
+  if(f.id==="fGasto")ok=await write(()=>sb.from("gastos").insert({data:today(),descricao:v.desc,cat:v.cat,valor:num(v.valor),moeda:v.moeda,taxa:v.moeda==="EUR"?eurNow():0,status:v.status}));
+  if(f.id==="fDep")ok=await write(()=>sb.from("depositos").insert({data:today(),valor:num(v.valor),nota:v.nota||""}));
+  if(f.id==="fTodo")ok=await write(()=>sb.from("tarefas").insert({txt:v.txt,feito:false,ordem:Date.now()}));
+  if(f.id==="fCfg"){const n={...S.cfg};["ida","volta","origem","destinos"].forEach(k=>n[k]=v[k]);["adultos","bebes","meta","alvoEuro","alvoVoo","metaEuro","spread"].forEach(k=>n[k]=num(v[k]));
+    ok=await write(()=>sb.from("cfg").upsert({id:"main",dados:n,atualizado_em:new Date().toISOString()}));if(ok){delete f.dataset.touched;render();msg("Ajustes salvos.")}return}
+  if(ok){f.reset();msg("Salvo.")}});
+$("#fCfg").addEventListener("input",e=>e.currentTarget.dataset.touched="1");
+document.addEventListener("click",async ev=>{const b=ev.target.closest("button");if(!b)return;
+  if(b.id==="sair"){await sb.auth.signOut();return}
+  if(b.dataset.del){if(b.dataset.armed!=="1"){b.dataset.armed="1";b.textContent="Confirmar?";b.classList.add("warn");setTimeout(()=>{if(b.isConnected){b.dataset.armed="";b.textContent="Excluir";b.classList.remove("warn")}},4000);return}
+    await write(()=>sb.from(b.dataset.del).delete().eq("id",b.dataset.id));return}
+  if(b.dataset.lido)await write(()=>sb.from("alertas").update({lido:true}).eq("id",b.dataset.lido))});
+document.addEventListener("change",async ev=>{const t=ev.target;
+  if(t.dataset.todo){await write(()=>sb.from("tarefas").update({feito:t.checked}).eq("id",t.dataset.todo))}
+  if(t.dataset.orc){const orc={...(S.cfg.orc||{})};orc[t.dataset.orc]=num(t.value);await write(()=>sb.from("cfg").upsert({id:"main",dados:{...S.cfg,orc},atualizado_em:new Date().toISOString()}))}});
+
+(async()=>{render();
+  if(SUPABASE_KEY.startsWith("COLE_")){msg("Falta colar a chave pública do Supabase (SUPABASE_KEY) no index.html.");return}
+  try{const{createClient}=await import("https://esm.sh/@supabase/supabase-js@2");sb=createClient(SUPABASE_URL,SUPABASE_KEY)}
+  catch(e){msg("Não foi possível carregar o Supabase. Verifique a conexão com a internet.");return}
+  renderAuth();
+  sb.auth.onAuthStateChange((_e,s)=>{setTimeout(()=>onSess(s),0)});
+})();
+}
+</script>
+</body>
+</html>

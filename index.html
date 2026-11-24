@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Travel To Euro 2027</title>
+<meta name="theme-color" content="#0F2E3A">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Viagem 2027">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Schibsted+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Travessia do Atlântico: petróleo + papel frio; âmbar = dinheiro/pendência, verde = comprar/no alvo.
+   Momento marcante: régua Tempo × Dinheiro no topo. O resto fica quieto e legível. */
+:root{color-scheme:light dark;
+  --paper:light-dark(#F4F6F5,#0B1820);--surface:light-dark(#FFFFFF,#11232D);--ink:light-dark(#10232E,#E4ECEE);
+  --mut:light-dark(#56666E,#93A6AE);--line:light-dark(#DCE3E5,#223947);--soft:light-dark(#EAF0F1,#172D39);
+  --sea:light-dark(#0E5E6F,#5DB7C8);--on-sea:light-dark(#FFFFFF,#04222A);--sea-tint:light-dark(#DDEDF0,#15384A);
+  --go:light-dark(#2E7D4F,#6CCB91);--go-tint:light-dark(#E1F1E7,#173A28);
+  --amber:light-dark(#A86A12,#E3A94B);--amber-tint:light-dark(#F8ECD8,#3A2B12);
+  --bad:light-dark(#B42318,#FF8A7F);--deep:#0F2E3A;
+  --display:"Schibsted Grotesk",system-ui,sans-serif;--text:"Atkinson Hyperlegible",system-ui,sans-serif}
+*{box-sizing:border-box;min-width:0}
+[hidden]{display:none!important}
+html{scroll-padding-top:72px}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 var(--text);overflow-x:clip}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
+h2{font-size:clamp(22px,2.4vw,28px);font-weight:700;letter-spacing:-.01em;line-height:1.15}
+h3{font-size:17px;font-weight:600}
+p{margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:max(4vw,16px)}
+.num,.fig-n{font-family:var(--display);font-variant-numeric:tabular-nums lining-nums}
+.mut{color:var(--mut)}.small{font-size:14px}
+a{color:var(--sea)}
+
+/* botões e campos */
+button{font:700 15px var(--text);min-height:44px;padding:0 18px;border-radius:6px;border:1px solid transparent;cursor:pointer;background:var(--sea);color:var(--on-sea)}
+button.sec{background:transparent;color:var(--sea);border-color:currentColor}
+button.ghost{background:transparent;color:var(--mut);border-color:var(--line);min-height:34px;padding:0 10px;font-size:13px;font-weight:400}
+button.ghost.warn{color:var(--bad);border-color:var(--bad)}
+input,select{font:16px var(--text);padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);min-height:46px;width:100%}
+input::placeholder{color:var(--mut);opacity:.75}
+input:disabled{opacity:.6}
+:is(input,select,button,a,summary):focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+label.f{display:flex;flex-direction:column;gap:5px;font-weight:700;font-size:14px}
+label.f small{font-weight:400;color:var(--mut);font-size:13px}
+.affix{position:relative}.affix>span{position:absolute;left:12px;top:50%;translate:0 -50%;color:var(--mut);pointer-events:none;font-size:15px}.affix>input{padding-left:38px}
+.grid-f{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px}
+
+/* topo */
+.top{background:var(--deep);color:#E8F1F3}
+.bar{display:flex;align-items:center;gap:14px;min-height:60px;border-bottom:1px solid rgba(255,255,255,.12)}
+.bar .brand{font:600 15px var(--display);color:#B9CDD3;margin-right:auto}
+.bar .who{font-size:14px;color:#B9CDD3;display:flex;gap:10px;align-items:center}
+.bar button.ghost{color:#E8F1F3;border-color:rgba(255,255,255,.35)}
+.hero{padding-block:clamp(28px,4vw,52px) clamp(28px,3.5vw,44px)}
+.hero h1{font-size:clamp(34px,5.4vw,64px);font-weight:800;letter-spacing:-.025em;line-height:.98}
+.hero h1 span{display:block;font-weight:500;color:#8FC6D2;font-size:.5em;letter-spacing:-.01em;margin-top:8px}
+.hero .trip{margin-top:14px;color:#B9CDD3;max-width:60ch}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr);gap:clamp(24px,4vw,56px);align-items:end}
+.count{font-family:var(--display);font-size:15px;color:#B9CDD3;margin-top:22px}
+.count b{display:block;font-size:clamp(44px,6vw,72px);line-height:1;color:#fff;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+
+/* régua tempo × dinheiro */
+.tl{display:grid;gap:16px}
+.tl-row{display:grid;grid-template-columns:5.5em minmax(0,1fr);gap:4px 14px;align-items:center}
+.tl-row>b{font:600 15px var(--display);color:#fff}
+.tl-track{position:relative;height:14px;border-radius:3px;background:rgba(255,255,255,.12)}
+.tl-track i{position:absolute;inset:0 auto 0 0;border-radius:3px;width:0}
+.tl-track.t i{background:rgba(255,255,255,.55)}.tl-track.d i{background:#E3A94B}
+.tl-track .mark{position:absolute;top:-6px;bottom:-6px;width:2px;background:#fff;translate:-1px 0}
+.tl-row p{grid-column:2;font-size:14px;color:#B9CDD3}
+.tl-axis{display:flex;justify-content:space-between;margin-left:calc(5.5em + 14px);font-size:13px;color:#8FA9B1}
+.ritmo{margin-top:6px;padding:12px 14px;border-left:3px solid #E3A94B;background:rgba(255,255,255,.06);color:#E8F1F3;font-size:15px}
+@media(prefers-reduced-motion:no-preference){.tl-track i{transition:width .9s cubic-bezier(.2,.7,.2,1)}}
+
+/* três respostas */
+.answers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));background:var(--surface);border:1px solid var(--line);border-radius:10px;margin-top:-1px;translate:0 -22px}
+.ans{padding:18px 20px;border-left:1px solid var(--line)}.ans:first-child{border-left:0}
+.ans h3{font:600 14px var(--text);color:var(--mut)}
+.ans .v{font:700 clamp(22px,2.6vw,30px)/1.15 var(--display);margin:6px 0 4px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.ans .v.go{color:var(--go)}.ans .v.wait{color:var(--ink)}.ans .v.amber{color:var(--amber)}
+.ans p{font-size:14px;color:var(--mut)}
+.alerts{display:grid;gap:8px;margin:-6px 0 22px}
+.al{display:flex;gap:14px;align-items:center;background:var(--amber-tint);border-radius:8px;padding:12px 14px}
+.al p{flex:1}.al small{color:var(--mut)}
+
+/* navegação */
+nav.sec-nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.sec-nav .wrap{display:flex;align-items:center;gap:4px;min-height:60px}
+nav.sec-nav .links{display:flex;gap:2px;overflow-x:auto;flex:1;scrollbar-width:none}
+nav.sec-nav a{flex:none;color:var(--mut);text-decoration:none;padding:8px 12px;border-radius:6px;font-size:15px}
+nav.sec-nav a:hover{color:var(--ink);background:var(--soft)}
+nav.sec-nav button{flex:none}
+
+/* seções */
+section.blk{padding-block:clamp(36px,5vw,64px);border-bottom:1px solid var(--line)}
+.blk-head{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 24px;margin-bottom:22px}
+.blk-head>div{flex:1 1 320px}.blk-head p{margin-top:6px;color:var(--mut);max-width:68ch}
+.two{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(20px,3vw,40px);align-items:start}
+.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,4vw,56px);align-items:start}
+.surface{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:clamp(16px,2vw,22px)}
+.stats{display:flex;flex-wrap:wrap;gap:10px 32px;margin-bottom:18px}
+.stat .k{font-size:14px;color:var(--mut)}.stat .v{font:700 24px/1.2 var(--display);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* veredito do câmbio */
+.verdict{border-radius:8px;padding:16px 18px;background:var(--soft);margin-bottom:18px}
+.verdict>b{display:block;font:800 30px/1.05 var(--display);letter-spacing:-.02em}
+.verdict p{margin-top:6px}.verdict p+p{font-size:14px;color:var(--mut)}
+.verdict.buy{background:var(--go-tint)}.verdict.buy>b{color:var(--go)}
+.verdict .where{margin-top:10px;padding-top:10px;border-top:1px solid color-mix(in srgb,currentColor 15%,transparent);font-size:15px;color:var(--ink)}
+tr.best td{background:var(--go-tint)}
+.chart{position:relative;height:260px}.chart svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.chart .grid{stroke:var(--line)}.chart .ax{fill:var(--mut);font:12px var(--text)}
+.chart .ln{fill:none;stroke:var(--sea);stroke-width:2.5;stroke-linejoin:round}
+.chart .area{fill:var(--sea);opacity:.08}
+.chart .lim{stroke:var(--go);stroke-width:2;stroke-dasharray:6 5}.chart .limt{fill:var(--go);font:600 12px var(--text)}
+.chart .dot{fill:var(--sea);stroke:var(--surface);stroke-width:3}.chart .lastt{fill:var(--ink);font:700 13px var(--display)}
+
+/* tabelas */
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:11px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:13px;font-weight:700;color:var(--mut);border-bottom-color:var(--ink)}
+td.n,th.n{text-align:right;white-space:nowrap}td.n{font-family:var(--display);font-variant-numeric:tabular-nums}
+td.x{text-align:right;width:1%;white-space:nowrap}
+tbody tr:hover td{background:var(--soft)}
+td.empty{color:var(--mut);padding:22px 8px}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 8px;border-radius:99px;white-space:nowrap;background:var(--soft);color:var(--mut)}
+.tag.go{background:var(--go-tint);color:var(--go)}.tag.amber{background:var(--amber-tint);color:var(--amber)}
+.sub-line{display:block;font-size:13px;color:var(--mut)}
+
+/* orçamento */
+.cats{display:grid}
+.cat{display:grid;grid-template-columns:minmax(0,11em) minmax(0,1fr) 9em;gap:8px 20px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.cat b{font-weight:700}
+.cat .tr{height:10px;border-radius:3px;background:var(--soft);position:relative;overflow:hidden}
+.cat .tr i{position:absolute;inset:0 auto 0 0;background:var(--sea);border-radius:3px}.cat .tr i.over{background:var(--amber)}
+.cat .use{grid-column:2;font-size:13px;color:var(--mut);margin-top:-4px}
+.cat .plan{grid-row:1/span 2;grid-column:3}
+.cat .plan input{min-height:40px;text-align:right;font-family:var(--display);font-variant-numeric:tabular-nums}
+
+/* checklist */
+.ck-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 32px;margin-bottom:20px}
+.ck-head p{margin-top:6px;color:var(--mut)}
+.ck-meter{flex:0 1 320px;display:grid;gap:6px;font-size:14px;color:var(--mut)}
+.ck-meter b{font:700 22px var(--display);color:var(--ink);font-variant-numeric:tabular-nums}
+.ck-meter .bar2{height:8px;border-radius:99px;background:var(--soft);overflow:hidden}
+.ck-meter .bar2 i{display:block;height:100%;width:0;background:var(--go);border-radius:99px}
+@media(prefers-reduced-motion:no-preference){.ck-meter .bar2 i{transition:width .5s ease}}
+.ck-add{display:grid;grid-template-columns:minmax(0,1fr) 190px auto;gap:10px;align-items:end;padding:16px;background:var(--surface);border:1px solid var(--line);border-radius:10px;margin-bottom:8px}
+.ck-add label.f{font-size:13px}
+.ck-group{display:flex;align-items:baseline;gap:8px;font:600 15px var(--display);margin:26px 0 6px;padding-bottom:8px;border-bottom:2px solid var(--line)}
+.ck-group .n{font:600 13px var(--text);color:var(--mut)}
+.ck-group.late{color:var(--bad);border-bottom-color:color-mix(in srgb,var(--bad) 40%,var(--line))}
+.ck-group.week{color:var(--amber);border-bottom-color:color-mix(in srgb,var(--amber) 40%,var(--line))}
+.ck-item{display:grid;grid-template-columns:26px 58px minmax(0,1fr) auto;gap:14px;align-items:center;padding:12px 4px;border-bottom:1px solid var(--line)}
+.ck-item:hover{background:var(--soft)}
+.ck-body{display:grid;gap:2px}.ck-body .txt{font-size:16px}
+.ck-box{appearance:none;-webkit-appearance:none;width:26px;height:26px;min-height:0;padding:0;margin:0;border:2px solid color-mix(in srgb,var(--mut) 60%,transparent);border-radius:50%;background:var(--surface);cursor:pointer;display:grid;place-items:center}
+.ck-box:hover{border-color:var(--sea)}
+.ck-box:checked{background:var(--go) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat;border-color:var(--go)}
+.ck-chipw{position:relative}
+.ck-chip{width:58px;min-height:0;height:56px;padding:0;border-radius:8px;border:1px solid transparent;display:grid;place-content:center;gap:1px;text-align:center;line-height:1;cursor:pointer;background:var(--sea-tint);color:var(--sea);font-weight:400}
+.ck-chip b{font:700 22px var(--display);font-variant-numeric:tabular-nums}
+.ck-chip span{font-size:12px}
+.ck-chip.late{background:color-mix(in srgb,var(--bad) 13%,var(--surface));color:var(--bad)}
+.ck-chip.week{background:var(--amber-tint);color:var(--amber)}
+.ck-chip.later{background:var(--soft);color:var(--mut)}
+.ck-chip.none{background:transparent;border:1.5px dashed color-mix(in srgb,var(--mut) 55%,transparent);color:var(--mut)}
+.ck-chip.none b{font-size:18px}
+.ck-chip:hover{filter:brightness(.97);border-color:currentColor}
+.ck-hidden{position:absolute;left:0;bottom:0;width:1px;height:1px;min-height:0;padding:0;border:0;opacity:0;pointer-events:none}
+.due{font-size:13px;color:var(--mut)}.due.soon{color:var(--amber);font-weight:700}.due.late{color:var(--bad);font-weight:700}
+.ck-item .x button{min-height:32px}
+@media(hover:hover){.ck-item .x{opacity:0;transition:opacity .15s}.ck-item:hover .x,.ck-item:focus-within .x{opacity:1}}
+details.realizadas{margin-top:32px}
+details.realizadas summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-bottom:8px;border-bottom:2px solid var(--line)}
+details.realizadas summary h3{margin:0;display:flex;gap:8px;align-items:baseline;font-size:15px}
+details.realizadas summary .n{font:600 13px var(--text);color:var(--mut)}
+details.realizadas summary::after{content:"Mostrar";font-size:14px;color:var(--sea)}
+details.realizadas[open] summary::after{content:"Ocultar"}
+.ck-done{display:grid;grid-template-columns:26px minmax(0,1fr) auto auto;gap:14px;align-items:center;padding:10px 4px;border-bottom:1px solid var(--line)}
+.ck-done .txt{color:var(--mut)}
+.ck-done .when{font-size:13px;color:var(--mut);white-space:nowrap}
+.ck-empty{color:var(--mut);padding:18px 4px}
+@media(hover:hover){.ck-done .x{opacity:0}.ck-done:hover .x,.ck-done:focus-within .x{opacity:1}}
+@media(max-width:600px){
+  .ck-add{grid-template-columns:minmax(0,1fr)}
+  .ck-item{grid-template-columns:26px 52px minmax(0,1fr);gap:8px 12px}.ck-item .x{grid-column:3;justify-self:start}.ck-item .x button{min-height:30px;font-size:12px}
+  .ck-chip{width:52px;height:52px}
+  .ck-done{grid-template-columns:26px minmax(0,1fr)}.ck-done .when,.ck-done .x{grid-column:2}
+}
+
+/* ajustes */
+details.cfg{background:var(--surface);border:1px solid var(--line);border-radius:10px}
+details.cfg summary{cursor:pointer;padding:18px 20px;font:700 18px var(--display);list-style:none;display:flex;justify-content:space-between;gap:12px}
+details.cfg summary::after{content:"Abrir";font:400 14px var(--text);color:var(--sea)}
+details.cfg[open] summary::after{content:"Fechar"}
+details.cfg form{padding:0 20px 20px;display:grid;gap:22px}
+fieldset{border:0;padding:0;margin:0}legend{font:600 15px var(--display);padding:0;margin-bottom:10px}
+.note{font-size:14px;color:var(--mut);max-width:75ch}
+
+/* diálogo novo lançamento */
+dialog{border:0;border-radius:12px;padding:0;width:min(560px,calc(100vw - 24px));background:var(--surface);color:var(--ink);box-shadow:0 24px 60px rgba(4,20,28,.35)}
+dialog::backdrop{background:rgba(6,24,32,.55)}
+.dlg-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px 0}
+.tabs{display:flex;gap:4px;padding:14px 20px 0;border-bottom:1px solid var(--line);overflow-x:auto}
+.tabs button{background:transparent;color:var(--mut);border:0;border-bottom:3px solid transparent;border-radius:0;padding:0 10px;font-weight:700;flex:none}
+.tabs button[aria-selected=true]{color:var(--sea);border-bottom-color:var(--sea)}
+dialog form{padding:20px;display:grid;gap:14px}
+.preview{background:var(--soft);border-radius:6px;padding:10px 12px;font-size:15px;min-height:44px}
+.preview b{font-family:var(--display)}
+.dlg-actions{display:flex;gap:10px;justify-content:flex-end}
+.seg{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.seg label{flex:1;text-align:center;cursor:pointer}
+.seg input{position:absolute;opacity:0;width:1px;height:1px}
+.seg span{display:block;padding:11px 8px;font-weight:700;font-size:14px;color:var(--mut)}
+.seg input:checked+span{background:var(--sea);color:var(--on-sea)}
+.seg input:focus-visible+span{outline:3px solid var(--amber);outline-offset:-3px}
+
+/* tela de entrada */
+#gate{min-height:100vh;display:grid;place-items:center;background:var(--deep);color:#E8F1F3;padding:24px}
+.gate-box{width:min(420px,100%)}
+.gate-box h1{font-size:clamp(34px,7vw,48px);font-weight:800;letter-spacing:-.025em;line-height:1}
+.gate-box>p{color:#B9CDD3;margin:12px 0 24px}
+.gate-box form{display:grid;gap:14px}
+.gate-box label.f{color:#E8F1F3}
+.gate-box input{background:#fff;color:#10232E;border-color:#fff}
+.gate-box .acts{display:flex;gap:10px;flex-wrap:wrap}
+.gate-box button{background:#fff;color:var(--deep)}
+.gate-box button.sec{background:transparent;color:#fff}
+#gateMsg{margin-top:16px;color:#F3CF8F;min-height:1.5em}
+
+/* aviso flutuante */
+#toast{position:fixed;left:50%;bottom:24px;translate:-50% 20px;opacity:0;pointer-events:none;background:var(--ink);color:var(--paper);padding:12px 18px;border-radius:8px;font-weight:700;max-width:calc(100vw - 32px);z-index:50;transition:opacity .2s,translate .2s}
+#toast.on{opacity:1;translate:-50% 0}#toast.err{background:var(--bad);color:#fff}
+
+@media(max-width:900px){.hero-grid,.two,.pair{grid-template-columns:minmax(0,1fr)}.answers{grid-template-columns:minmax(0,1fr)}.ans{border-left:0;border-top:1px solid var(--line)}.ans:first-child{border-top:0}}
+@media(max-width:600px){
+  .cat{grid-template-columns:minmax(0,1fr) 8em}.cat .tr{grid-column:1/-1;grid-row:2}.cat .use{grid-column:1/-1;grid-row:3}.cat .plan{grid-row:1;grid-column:2}
+  table{font-size:14px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--line)}
+  .stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:7.5em;text-align:start}.stack td.n{text-align:start}
+  .stack td::before{content:attr(data-l);float:inline-start;width:7em;margin-inline-start:-7.5em;color:var(--mut);font:14px var(--text)}
+  .stack td:empty,.stack td.x:not(:has(button)){display:none}.stack td.empty{padding-inline-start:0}.stack td.empty::before{display:none}
+  nav.sec-nav .wrap{gap:8px}nav.sec-nav button{padding:0 12px}
+  .bar .brand{display:none}.bar .who{margin-left:auto;max-width:100%}.bar .who span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+}
+</style>
+<script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
+</head>
+<body>
+
+<section id="gate">
+  <div class="gate-box">
+    <h1>Travel To Euro 2027</h1>
+    <p>O planejamento da viagem da família: dinheiro guardado, câmbio, passagens e orçamento. Entre com seu e-mail para ver e editar.</p>
+    <div id="auth"></div>
+    <p id="gateMsg" role="status"></p>
+  </div>
+</section>
+
+<div id="app" hidden>
+<header class="top">
+  <div class="wrap bar"><span class="brand">Planejamento da família</span><span class="who" id="who"></span></div>
+  <div class="wrap hero hero-grid">
+    <div>
+      <h1>Travel To Euro 2027<span>September 2027</span></h1>
+      <p class="trip" id="trip"></p>
+      <p class="count"><b id="days">—</b>dias para o embarque</p>
+    </div>
+    <div class="tl" aria-label="Comparação entre o tempo que passou e o dinheiro guardado">
+      <div class="tl-row"><b>Tempo</b><div class="tl-track t"><i id="tlT"></i></div><p id="tlTtxt"></p></div>
+      <div class="tl-row"><b>Dinheiro</b><div class="tl-track d"><i id="tlD"></i><span class="mark" id="tlMark" title="Onde o dinheiro deveria estar hoje"></span></div><p id="tlDtxt"></p></div>
+      <div class="tl-axis"><span id="tlIni"></span><span id="tlFim"></span></div>
+      <p class="ritmo" id="ritmo"></p>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="answers">
+    <div class="ans"><h3>Compro euro hoje?</h3><div class="v" id="aEuro">—</div><p id="aEuroTxt"></p></div>
+    <div class="ans"><h3>Melhor passagem por adulto</h3><div class="v" id="aVoo">—</div><p id="aVooTxt"></p></div>
+    <div class="ans"><h3>Orçamento comprometido</h3><div class="v" id="aOrc">—</div><p id="aOrcTxt"></p></div>
+  </div>
+  <div class="alerts" id="alerts" aria-live="polite"></div>
+</div>
+
+<nav class="sec-nav" aria-label="Seções"><div class="wrap">
+  <div class="links"><a href="#cambio">Câmbio</a><a href="#passagens">Passagens</a><a href="#orcamento">Orçamento</a><a href="#gastos">Gastos</a><a href="#poupanca">Poupança</a><a href="#checklist">Checklist</a><a href="#ajustes">Ajustes</a></div>
+  <button type="button" data-novo="dep">Novo lançamento</button>
+</div></nav>
+
+<main>
+<section class="blk" id="cambio"><div class="wrap">
+  <div class="blk-head"><div><h2>Câmbio do euro</h2><p id="cambioTxt">O monitor diário registra a cotação comercial aqui.</p></div><button type="button" class="sec" data-novo="euro">Registrar compra de euro</button></div>
+  <div class="two">
+    <div class="surface"><div class="chart" id="eurChart" role="img" aria-label="Gráfico da cotação do euro comercial"><svg></svg></div></div>
+    <div>
+      <div class="verdict" id="sig"><b>—</b><p>Sem cotação registrada ainda.</p></div>
+      <div class="stats">
+        <div class="stat"><div class="k">Euros comprados</div><div class="v" id="eTot">€ 0</div></div>
+        <div class="stat"><div class="k">Taxa média paga</div><div class="v" id="eMed">—</div></div>
+        <div class="stat"><div class="k">Meta em euros</div><div class="v" id="eMeta">—</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="blk-head" style="margin:36px 0 12px"><div><h3>Onde comprar hoje</h3><p id="ondeTxt"></p></div></div>
+  <div class="tbl"><table class="stack" id="tOnde"><thead><tr><th>Casa ou banco</th><th>Tipo</th><th class="n">Custo final por euro</th><th class="n">Diferença</th><th class="n" id="thLote">Custo do lote</th><th class="x"></th></tr></thead><tbody></tbody></table></div>
+  <h3 style="margin:36px 0 8px">Compras de euro</h3>
+  <div class="tbl"><table class="stack" id="tEuro"><thead><tr><th>Data</th><th class="n">Euros</th><th class="n">Taxa paga</th><th class="n">Custo em R$</th><th>Onde</th><th class="x"></th></tr></thead><tbody></tbody></table></div>
+</div></section>
+
+<section class="blk" id="passagens"><div class="wrap">
+  <div class="blk-head"><div><h2>Passagens</h2><p>Preços de ida e volta por adulto. O monitor acrescenta o que encontra; você também pode anotar cotações. O total da família considera o bebê de colo a cerca de 10% da tarifa.</p></div><button type="button" class="sec" data-novo="voo">Anotar passagem</button></div>
+  <div class="tbl"><table class="stack" id="tVoo"><thead><tr><th>Vista em</th><th>Rota</th><th>Companhia e datas</th><th class="n">Por adulto</th><th class="n">Família</th><th class="x"></th></tr></thead><tbody></tbody></table></div>
+</div></section>
+
+<section class="blk" id="orcamento"><div class="wrap">
+  <div class="blk-head"><div><h2>Orçamento por categoria</h2><p>A barra mostra quanto de cada categoria já foi comprometido. Edite o valor planejado à direita; ele é salvo ao sair do campo.</p></div></div>
+  <div class="stats">
+    <div class="stat"><div class="k">Planejado</div><div class="v" id="oPlan">—</div></div>
+    <div class="stat"><div class="k">Comprometido</div><div class="v" id="oComp">—</div></div>
+    <div class="stat"><div class="k">Ainda livre no plano</div><div class="v" id="oFalta">—</div></div>
+  </div>
+  <div class="cats" id="cats"></div>
+</div></section>
+
+<section class="blk" id="gastos"><div class="wrap">
+  <div class="blk-head"><div><h2>Gastos e reservas</h2><p>Tudo o que já foi pago ou reservado. Valores em euro são convertidos pela cotação do dia do lançamento.</p></div><button type="button" class="sec" data-novo="gasto">Lançar gasto</button></div>
+  <div class="stats">
+    <div class="stat"><div class="k">Pago</div><div class="v" id="gPago">—</div></div>
+    <div class="stat"><div class="k">Reservado, a pagar</div><div class="v" id="gRes">—</div></div>
+  </div>
+  <div class="tbl"><table class="stack" id="tGasto"><thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Situação</th><th class="n">Valor</th><th class="n">Em R$</th><th class="x"></th></tr></thead><tbody></tbody></table></div>
+</div></section>
+
+<section class="blk" id="poupanca"><div class="wrap">
+  <div class="blk-head"><div><h2>Poupança da viagem</h2><p>Saldo livre é o que foi depositado menos os gastos pagos e os reais usados para comprar euro.</p></div><button type="button" class="sec" data-novo="dep">Registrar depósito</button></div>
+  <div class="stats">
+    <div class="stat"><div class="k">Depositado</div><div class="v" id="pTot">—</div></div>
+    <div class="stat"><div class="k">Saldo livre</div><div class="v" id="pSaldo">—</div></div>
+  </div>
+  <div class="tbl"><table class="stack" id="tDep"><thead><tr><th>Data</th><th>Nota</th><th class="n">Valor</th><th class="x"></th></tr></thead><tbody></tbody></table></div>
+</div></section>
+
+<section class="blk" id="checklist"><div class="wrap">
+  <div class="ck-head">
+    <div><h2>Checklist</h2><p id="todoProg"></p></div>
+    <div class="ck-meter"><span><b id="ckN">0</b> <span id="ckDe"></span></span><div class="bar2"><i id="ckBar"></i></div></div>
+  </div>
+  <form class="ck-add" id="fTodo">
+    <label class="f">Nova atividade<input name="txt" required placeholder="Ex.: reservar hotel em Madri"></label>
+    <label class="f">Data limite (opcional)<input name="prazo" type="date"></label>
+    <button>Adicionar</button>
+  </form>
+  <div id="todos"></div>
+  <details class="realizadas" id="boxReal" open><summary><h3>Atividades realizadas <span class="n" id="cntReal"></span></h3></summary><div id="todosReal"></div></details>
+</div></section>
+
+<section class="blk" id="ajustes" style="border-bottom:0"><div class="wrap">
+  <details class="cfg"><summary>Ajustes da viagem</summary>
+    <form id="fCfg">
+      <fieldset><legend>Viagem</legend><div class="grid-f">
+        <label class="f">Embarque<input name="ida" type="date"></label>
+        <label class="f">Retorno<input name="volta" type="date"></label>
+        <label class="f">Cidade de saída<input name="origem" placeholder="FOR"></label>
+        <label class="f">Destinos<input name="destinos" placeholder="Lisboa, Madri, Paris"><small>Separe por vírgula.</small></label>
+      </div></fieldset>
+      <fieldset><legend>Quem vai</legend><div class="grid-f">
+        <label class="f">Adultos<input name="adultos" type="number" min="1"></label>
+        <label class="f">Bebês de colo<input name="bebes" type="number" min="0"></label>
+      </div></fieldset>
+      <fieldset><legend>Metas</legend><div class="grid-f">
+        <label class="f">Meta a juntar<span class="affix"><span>R$</span><input name="meta" type="number" step="100" min="0"></span><small>Vazio ou zero usa o total do orçamento.</small></label>
+        <label class="f">Meta em euros<span class="affix"><span>€</span><input name="metaEuro" type="number" step="50" min="0"></span></label>
+      </div></fieldset>
+      <fieldset><legend>Alertas</legend><div class="grid-f">
+        <label class="f">Antes da 1ª compra, avisar com euro abaixo de<span class="affix"><span>R$</span><input name="alvoEuro" type="number" step="0.01" min="0"></span></label>
+        <label class="f">Avisar com passagem por adulto abaixo de<span class="affix"><span>R$</span><input name="alvoVoo" type="number" step="50" min="0"></span></label>
+        <label class="f">Acréscimo sobre o comercial (%)<input name="spread" type="number" step="0.1" min="0"><small>IOF e margem da corretora. Vazio: calculado pelas suas compras.</small></label>
+      </div></fieldset>
+      <div><button>Salvar ajustes</button></div>
+      <p class="note">O monitor diário consulta o câmbio e as passagens e grava tudo aqui. Quando o euro comercial, somado ao acréscimo que vocês pagam na compra, fica abaixo da taxa média já paga, o painel e o monitor avisam que é hora de comprar mais. Antes da primeira compra, vale o limite fixo acima.</p>
+    </form>
+  </details>
+</div></section>
+</main>
+</div>
+
+<dialog id="novo" aria-labelledby="novoTit">
+  <div class="dlg-head"><h2 id="novoTit" style="font-size:22px">Novo lançamento</h2><button type="button" class="ghost" id="fechar">Fechar</button></div>
+  <div class="tabs" role="tablist">
+    <button type="button" role="tab" data-aba="dep">Depósito</button>
+    <button type="button" role="tab" data-aba="euro">Compra de euro</button>
+    <button type="button" role="tab" data-aba="gasto">Gasto ou reserva</button>
+    <button type="button" role="tab" data-aba="voo">Passagem</button>
+  </div>
+  <form id="fDep" data-form="dep">
+    <label class="f">Valor guardado<span class="affix"><span>R$</span><input name="valor" type="number" step="0.01" min="0.01" required inputmode="decimal"></span></label>
+    <label class="f">Nota<input name="nota" placeholder="Sobra do mês, 13º salário…"><small>Opcional.</small></label>
+    <div class="dlg-actions"><button>Registrar depósito</button></div>
+  </form>
+  <form id="fEuro" data-form="euro" hidden>
+    <div class="grid-f">
+      <label class="f">Euros comprados<span class="affix"><span>€</span><input name="eur" type="number" step="0.01" min="0.01" required inputmode="decimal"></span></label>
+      <label class="f">Taxa paga por euro<span class="affix"><span>R$</span><input name="taxa" type="number" step="0.0001" min="0.01" required inputmode="decimal"></span><small>Com IOF e tarifas incluídos.</small></label>
+    </div>
+    <label class="f">Onde comprou<input name="onde" list="casas" autocomplete="off" placeholder="Wise, Nomad, casa de câmbio…"><small>Ao escolher uma casa pesquisada hoje, a taxa é preenchida com o custo final dela.</small></label><datalist id="casas"></datalist>
+    <p class="preview" id="prevEuro"></p>
+    <div class="dlg-actions"><button>Registrar compra</button></div>
+  </form>
+  <form id="fGasto" data-form="gasto" hidden>
+    <label class="f">Descrição<input name="desc" required placeholder="Hotel em Lisboa, 3 noites"></label>
+    <div class="grid-f">
+      <label class="f">Categoria<select name="cat" id="selCat"></select></label>
+      <label class="f">Valor<input name="valor" type="number" step="0.01" min="0.01" required inputmode="decimal"></label>
+    </div>
+    <div class="grid-f">
+      <div class="f"><span style="font-weight:700;font-size:14px">Moeda</span><div class="seg" style="margin-top:5px"><label><input type="radio" name="moeda" value="BRL" checked><span>Real</span></label><label><input type="radio" name="moeda" value="EUR"><span>Euro</span></label></div></div>
+      <div class="f"><span style="font-weight:700;font-size:14px">Situação</span><div class="seg" style="margin-top:5px"><label><input type="radio" name="status" value="pago" checked><span>Pago</span></label><label><input type="radio" name="status" value="reservado"><span>A pagar</span></label></div></div>
+    </div>
+    <p class="preview" id="prevGasto"></p>
+    <div class="dlg-actions"><button>Lançar gasto</button></div>
+  </form>
+  <form id="fVoo" data-form="voo" hidden>
+    <div class="grid-f">
+      <label class="f">Rota<input name="rota" required placeholder="FOR → LIS"></label>
+      <label class="f">Companhia<input name="cia" placeholder="TAP"></label>
+    </div>
+    <div class="grid-f">
+      <label class="f">Preço por adulto, ida e volta<span class="affix"><span>R$</span><input name="preco" type="number" step="1" min="1" required inputmode="numeric"></span></label>
+      <label class="f">Datas do voo<input name="datas" placeholder="01/09 – 11/09/2027"></label>
+    </div>
+    <p class="preview" id="prevVoo"></p>
+    <div class="dlg-actions"><button>Anotar passagem</button></div>
+  </form>
+</dialog>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+{
+const CATS=["Passagens","Hospedagem","Transporte na Europa","Alimentação","Passeios e ingressos","Seguro viagem","Documentos","Compras","Outros"];
+const S={cfg:{},cambio:[],voos:[],alertas:[],gastos:[],deps:[],euros:[],todos:[],ofertas:[]};
+const SUPABASE_URL="https://hmeurazpzjmjvodspzpl.supabase.co";
+const SUPABASE_KEY="sb_publishable_JU3n5cTjvHlRS4Q5N5Q7iw_3-iy9EOd"; // Supabase > Project Settings > API Keys > Publishable key (pode ficar no site)
+let sb=null,sess=null,canWrite=false;
+const $=s=>document.querySelector(s);
+const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const num=v=>{const n=Number(v);return isFinite(n)?n:0};
+const clamp=v=>Math.max(0,Math.min(100,v));
+const brl=v=>"R$ "+num(v).toLocaleString("pt-BR",{minimumFractionDigits:0,maximumFractionDigits:0});
+const brl2=v=>"R$ "+num(v).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:4});
+const eur=v=>"€ "+num(v).toLocaleString("pt-BR",{maximumFractionDigits:2});
+const today=()=>{const d=new Date();return new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,10)};
+const dBR=s=>{if(!s)return"";const[y,m,d]=String(s).slice(0,10).split("-");return d?`${d}/${m}/${y}`:esc(s)};
+const lista=xs=>xs.length<2?xs.join(""):xs.slice(0,-1).join(", ")+" e "+xs[xs.length-1];
+$("#selCat").innerHTML=CATS.map(c=>`<option>${c}</option>`).join("");
+
+const eurNow=()=>{const c=S.cambio[S.cambio.length-1];return c?num(c.comercial):0};
+const emBRL=g=>g.moeda==="EUR"?num(g.valor)*(num(g.taxa)||eurNow()):num(g.valor);
+const spr=()=>{if(num(S.cfg.spread)>0)return num(S.cfg.spread);const xs=S.euros.filter(x=>num(x.comercial_dia)>0&&num(x.taxa)>0).map(x=>(num(x.taxa)/num(x.comercial_dia)-1)*100);return xs.length?Math.max(0,Math.round(xs.reduce((a,b)=>a+b,0)/xs.length*10)/10):1.5};
+const media=()=>{const t=S.euros.reduce((a,x)=>a+num(x.eur),0);return t?S.euros.reduce((a,x)=>a+num(x.eur)*num(x.taxa),0)/t:0};
+const limite=()=>{const m=media();return m?m/(1+spr()/100):num(S.cfg.alvoEuro)};
+const TIPO={"conta global":"Conta global","especie":"Espécie (papel)","cartao pre-pago":"Cartão pré-pago","remessa":"Remessa"};
+function ofertasHoje(){if(!S.ofertas.length)return{d:null,xs:[],recente:false};
+  const d=S.ofertas.reduce((m,o)=>String(o.data)>m?String(o.data):m,"");
+  const xs=S.ofertas.filter(o=>String(o.data)===d).sort((a,b)=>num(a.vet)-num(b.vet));
+  return{d,xs,recente:(new Date(today()+"T12:00")-new Date(d+"T12:00"))/864e5<=3}}
+const diasAte=d=>d?Math.round((new Date(String(d).slice(0,10)+"T12:00")-new Date(today()+"T12:00"))/864e5):null;
+function prazoTxt(t){const n=diasAte(t.prazo);if(t.feito)return"";if(n===null)return`<span class="due">Sem data limite</span>`;
+  if(n<0)return`<span class="due late">Atrasada há ${-n} dia${n<-1?"s":""}</span>`;
+  if(n===0)return`<span class="due late">Vence hoje</span>`;
+  if(n===1)return`<span class="due soon">Vence amanhã</span>`;
+  if(n<=14)return`<span class="due soon">Vence em ${n} dias</span>`;
+  return`<span class="due">Faltam ${n} dias</span>`}
+const delBtn=(col,id)=>canWrite?`<button class="ghost" data-del="${esc(col)}" data-id="${esc(id)}">Excluir</button>`:"";
+
+function drawEur(){const s=$("#eurChart svg"),W=s.clientWidth,H=s.clientHeight;if(!W)return;
+  const d=S.cambio.slice(-120);if(d.length<2){s.innerHTML=`<text class="ax" x="0" y="24">O gráfico aparece a partir de duas cotações registradas.</text>`;return}
+  const al=limite(),vs=d.map(x=>num(x.comercial)).concat(al?[al]:[]),mn=Math.min(...vs)-0.04,mx=Math.max(...vs)+0.04;
+  const L=W<480?34:46,R=W<480?44:64,T=12,B=26,X=i=>L+(W-L-R)*i/(d.length-1),Y=v=>T+(H-T-B)*(1-(v-mn)/(mx-mn));
+  let h="";for(let k=0;k<4;k++){const v=mn+(mx-mn)*k/3;h+=`<line class="grid" x1="${L}" x2="${W-R}" y1="${Y(v)}" y2="${Y(v)}"/><text class="ax" x="${L-8}" y="${Y(v)+4}" text-anchor="end">${v.toFixed(2).replace(".",",")}</text>`}
+  const pts=d.map((x,i)=>X(i)+","+Y(num(x.comercial))).join(" ");
+  h+=`<polygon class="area" points="${X(0)},${H-B} ${pts} ${X(d.length-1)},${H-B}"/>`;
+  if(al)h+=`<line class="lim" x1="${L}" x2="${W-R}" y1="${Y(al)}" y2="${Y(al)}"/><text class="limt" x="${L+6}" y="${Y(al)-7}">${media()?"Compensa com o comercial abaixo de":"Seu limite"} ${brl2(al)}</text>`;
+  h+=`<polyline class="ln" points="${pts}"/>`;
+  const l=d[d.length-1],lx=X(d.length-1),ly=Y(num(l.comercial));
+  h+=`<circle class="dot" cx="${lx}" cy="${ly}" r="6"/><text class="lastt" x="${lx+10}" y="${ly+4}">${num(l.comercial).toFixed(2).replace(".",",")}</text>`;
+  h+=`<text class="ax" x="${L}" y="${H-4}">${dBR(d[0].data)}</text><text class="ax" x="${W-R}" y="${H-4}" text-anchor="end">${dBR(l.data)}</text>`;
+  s.innerHTML=h}
+new ResizeObserver(drawEur).observe($("#eurChart"));
+
+function render(){const c=S.cfg,ad=num(c.adultos)||2,bb=num(c.bebes);
+  const dep=S.deps.reduce((a,x)=>a+num(x.valor),0),plan=CATS.reduce((a,k)=>a+num((c.orc||{})[k]),0),meta=num(c.meta)||plan;
+  const comp=S.gastos.reduce((a,g)=>a+emBRL(g),0),pago=S.gastos.filter(g=>g.status==="pago").reduce((a,g)=>a+emBRL(g),0);
+  const eTot=S.euros.reduce((a,x)=>a+num(x.eur),0),eCusto=S.euros.reduce((a,x)=>a+num(x.eur)*num(x.taxa),0);
+  const hoje=new Date(),ida=c.ida?new Date(c.ida+"T12:00"):null;
+
+  // topo
+  const ds=String(c.destinos||"Lisboa, Madri, Paris").split(",").map(x=>x.trim()).filter(Boolean);
+  $("#trip").textContent=`${ad} adulto${ad>1?"s":""}${bb?` e ${bb} bebê${bb>1?"s":""} de colo`:""}, saindo de ${c.origem||"FOR"} para ${lista(ds)}.${ida?` Embarque em ${dBR(c.ida)}${c.volta?`, retorno em ${dBR(c.volta)}`:""}.`:" Defina a data de embarque nos Ajustes."}`;
+  $("#days").textContent=ida?Math.max(0,Math.ceil((ida-hoje)/864e5)).toLocaleString("pt-BR"):"—";
+  const datas=[...S.cambio,...S.deps,...S.euros,...S.gastos].map(x=>x.data).filter(Boolean).sort(),ini=datas[0]?new Date(datas[0]+"T12:00"):hoje;
+  const tPct=ida&&ida>ini?clamp((hoje-ini)/(ida-ini)*100):0,dPct=meta?clamp(dep/meta*100):0;
+  $("#tlT").style.width=tPct+"%";$("#tlD").style.width=dPct+"%";$("#tlMark").style.left=tPct+"%";
+  $("#tlTtxt").textContent=ida?`${Math.round(tPct)}% do caminho até o embarque`:"Sem data de embarque";
+  $("#tlDtxt").textContent=meta?`${brl(dep)} de ${brl(meta)} guardados (${Math.round(dPct)}%)`:"Defina a meta nos Ajustes";
+  $("#tlIni").textContent=`Início ${dBR(ini.toISOString())}`;$("#tlFim").textContent=ida?`Embarque ${dBR(c.ida)}`:"";
+  {const meses=ida?Math.max(1,(ida-hoje)/2629800000):0,falta=Math.max(0,meta-dep),r=$("#ritmo");
+   if(!meta||!ida){r.textContent="Defina a meta e a data de embarque nos Ajustes para ver o ritmo de poupança."}
+   else if(!falta){r.textContent="Meta atingida. O que entrar daqui em diante é folga."}
+   else r.textContent=`${dPct>=tPct?"Vocês estão no ritmo.":"O dinheiro está atrás do calendário."} Guardando ${brl(falta/meses)} por mês, a meta fecha até o embarque.`}
+
+  // três respostas
+  const ce=S.cambio[S.cambio.length-1],cp=S.cambio[S.cambio.length-2];
+  const OH=ofertasHoje(),bo=OH.recente?OH.xs[0]:null;
+  const med=eTot?eCusto/eTot:0,lim=limite(),abaixo=!!(med&&bo?num(bo.vet)<med:(ce&&lim&&num(ce.comercial)<lim)),estC=bo?num(bo.vet):(ce?num(ce.comercial)*(1+spr()/100):0);
+  const aE=$("#aEuro");
+  if(!ce){aE.textContent="Sem cotação";aE.className="v wait";$("#aEuroTxt").textContent="O monitor registra a cotação todo fim de tarde."}
+  else if(!lim){aE.textContent="Defina um limite";aE.className="v wait";$("#aEuroTxt").textContent=`Comercial hoje: ${brl2(ce.comercial)}. Informe o limite da 1ª compra nos Ajustes.`}
+  else{aE.textContent=abaixo?"Comprar":"Esperar";aE.className="v "+(abaixo?"go":"wait");$("#aEuroTxt").textContent=bo?`Melhor lugar hoje: ${bo.fornecedor}, ${brl2(bo.vet)} por euro com IOF.${med?` Sua média: ${brl2(med)}.`:""}`:`Comercial hoje: ${brl2(ce.comercial)}. Compensa abaixo de ${brl2(lim)}.`}
+  const vs=[...S.voos].sort((a,b)=>num(a.preco)-num(b.preco)),best=vs[0],noAlvo=best&&c.alvoVoo&&num(best.preco)<=num(c.alvoVoo);
+  $("#aVoo").textContent=best?brl(best.preco):"Nenhuma ainda";$("#aVoo").className="v "+(noAlvo?"go":"");
+  $("#aVooTxt").textContent=best?`${best.cia||"Companhia não informada"}, ${best.rota||""}.${c.alvoVoo?` Seu alvo: ${brl(c.alvoVoo)}${noAlvo?", atingido.":"."}`:""}`:"Anote cotações ou aguarde o monitor.";
+  $("#aOrc").textContent=brl(comp);$("#aOrc").className="v "+(plan&&comp>plan?"amber":"");
+  $("#aOrcTxt").textContent=`${plan?`De ${brl(plan)} planejados (${Math.round(comp/plan*100)}%). `:""}${brl(pago)} já pago.`;
+
+  // alertas
+  const al=[];
+  if(abaixo)al.push({texto:med&&bo?`Euro abaixo da sua média: hoje a opção mais barata (${bo.fornecedor}) sai por ${brl2(bo.vet)} por euro com IOF, contra a média de ${brl2(med)}.`:med?`Euro abaixo da sua média: comprar hoje sai por cerca de ${brl2(estC)} (comercial ${brl2(ce.comercial)} mais ${String(spr()).replace(".",",")}%), contra a média de ${brl2(med)}.`:`Euro em ${brl2(ce.comercial)}, abaixo do seu limite de ${brl2(c.alvoEuro)}. Bom momento para a primeira compra.`,data:ce.data});
+  if(noAlvo)al.push({texto:`Passagem ${best.rota||""} por ${brl(best.preco)} por adulto, abaixo do alvo de ${brl(c.alvoVoo)}.`,data:best.data});
+  {const late=S.todos.filter(t=>!t.feito&&diasAte(t.prazo)!==null&&diasAte(t.prazo)<0);
+   if(late.length)al.push({texto:`${late.length===1?"1 atividade do checklist está":`${late.length} atividades do checklist estão`} com a data limite vencida: ${lista(late.slice(0,3).map(t=>t.txt))}${late.length>3?" e outras":""}.`,data:today()})}
+  S.alertas.filter(a=>!a.lido).slice(0,4).forEach(a=>al.push(a));
+  $("#alerts").innerHTML=al.map(a=>`<div class="al"><p>${esc(a.texto)}<br><small>${dBR(a.data)}</small></p>${a._id&&canWrite?`<button class="ghost" data-lido="${esc(a._id)}">Marcar como visto</button>`:""}</div>`).join("");
+
+  // câmbio
+  $("#cambioTxt").textContent=ce?`Última cotação comercial: ${brl2(ce.comercial)} em ${dBR(ce.data)}${cp?`, ${num(ce.comercial)>=num(cp.comercial)?"alta":"queda"} de ${Math.abs((num(ce.comercial)/num(cp.comercial)-1)*100).toFixed(2).replace(".",",")}% sobre a anterior`:""}${ce.turismo?`. Turismo: ${brl2(ce.turismo)}`:""}. Na compra, some IOF e a margem da corretora.`:"Ainda sem cotações registradas.";
+  drawEur();
+  {const sg=$("#sig"),mE=num(c.metaEuro),falta=Math.max(0,mE-eTot),meses=ida?Math.max(1,Math.round((ida-hoje)/2629800000)):0,parc=mE&&meses?falta/meses:0;
+   const extra=parc?`Faltam ${eur(falta)} para a meta: cerca de ${eur(parc)} por mês até o embarque.`:(mE?"Meta em euros atingida.":"Defina a meta em euros nos Ajustes para ver quanto comprar por mês.");
+   if(!ce){sg.className="verdict";sg.innerHTML=`<b>Sem cotação</b><p>O monitor registra a cotação todo fim de tarde.</p>`}
+   else if(!lim){sg.className="verdict";sg.innerHTML=`<b>Primeira compra</b><p>Registre a primeira compra para o painel comparar com a sua média.</p><p>${esc(extra)}</p>`}
+   else{sg.className="verdict"+(abaixo?" buy":"");sg.innerHTML=`<b>${abaixo?"Comprar":"Esperar"}</b><p>${med?`Comprar hoje sai por ${bo?"":"cerca de "}${brl2(estC)}; sua média é ${brl2(med)}.`:`Comercial em ${brl2(ce.comercial)}; seu limite é ${brl2(lim)}.`} ${abaixo?"Comprar agora reduz o custo médio.":med?`Compensa quando o custo final ficar abaixo de ${brl2(med)}.`:`Compensa com o comercial abaixo de ${brl2(lim)}.`}</p><p>${esc(extra)}</p>`}
+   if(bo&&ce)sg.insertAdjacentHTML("beforeend",`<p class="where">Melhor lugar hoje: <b>${esc(bo.fornecedor)}</b> (${esc(TIPO[bo.tipo]||bo.tipo)}), ${brl2(bo.vet)} por euro com IOF e tarifas.</p>`)}
+  {const mE=num(c.metaEuro),falta=Math.max(0,mE-eTot),meses=ida?Math.max(1,Math.round((ida-hoje)/2629800000)):0,p=mE&&meses?falta/meses:0,lote=p>0?Math.max(50,Math.round(p/10)*10):500;
+   $("#thLote").textContent=`Para € ${lote.toLocaleString("pt-BR")}`;
+   const xs=OH.xs.slice(0,8),b=xs[0],w=xs[xs.length-1];
+   $("#ondeTxt").textContent=!xs.length?"O monitor pesquisa todo fim de tarde as contas globais, os bancos e as casas de câmbio de Fortaleza e mostra aqui a opção mais barata.":`Pesquisa de ${dBR(OH.d)}${OH.recente?"":", desatualizada"}. O custo final é o VET: cotação mais IOF e tarifas.${xs.length>1&&num(w.vet)>num(b.vet)?` Comprar € ${lote.toLocaleString("pt-BR")} na opção mais barata (${b.fornecedor}) em vez da mais cara (${w.fornecedor}) economiza ${brl((num(w.vet)-num(b.vet))*lote)}.`:""}`;
+   $("#tOnde tbody").innerHTML=xs.map((o,i)=>`<tr class="${i===0&&OH.recente?"best":""}"><td><b>${esc(o.fornecedor)}</b>${o.obs?`<span class="sub-line">${esc(o.obs)}</span>`:""}</td><td>${esc(TIPO[o.tipo]||o.tipo)}${o.iof_pct!=null?`<span class="sub-line">IOF ${String(o.iof_pct).replace(".",",")}%${o.tarifa?`, ${esc(o.tarifa)}`:""}</span>`:""}</td><td class="n">${brl2(o.vet)}${i===0?` <span class="tag go">mais barata</span>`:""}</td><td class="n">${i===0?"—":"+ "+brl2(num(o.vet)-num(b.vet))}</td><td class="n">${brl(num(o.vet)*lote)}</td><td class="x">${String(o.link||"").startsWith("https://")?`<a href="${esc(o.link)}" target="_blank" rel="noopener">Abrir site</a>`:""}</td></tr>`).join("")||`<tr><td colspan="6" class="empty">Ainda sem pesquisa de preços. A primeira chega com o monitor do fim da tarde.</td></tr>`;
+   const casas=[...new Set([...S.ofertas.map(o=>o.fornecedor),...S.euros.map(x=>x.onde)].filter(Boolean))].sort();
+   $("#casas").innerHTML=casas.map(x=>`<option value="${esc(x)}">`).join("")}
+  $("#eMeta").textContent=num(c.metaEuro)?eur(c.metaEuro):"—";
+  $("#eTot").textContent=eur(eTot);$("#eMed").textContent=eTot?brl2(eCusto/eTot):"—";
+  $("#tEuro tbody").innerHTML=[...S.euros].reverse().map(x=>`<tr><td>${dBR(x.data)}</td><td class="n">${eur(x.eur)}</td><td class="n">${brl2(x.taxa)}</td><td class="n">${brl(num(x.eur)*num(x.taxa))}</td><td>${esc(x.onde)}</td><td class="x">${delBtn("euros",x._id)}</td></tr>`).join("")||`<tr><td colspan="6" class="empty">Nenhuma compra de euro ainda. Comprar aos poucos dilui o risco do câmbio; use “Registrar compra de euro”.</td></tr>`;
+
+  // passagens
+  $("#tVoo tbody").innerHTML=vs.slice(0,30).map(x=>{const fam=num(x.preco)*ad+num(x.preco)*0.1*bb,ok=c.alvoVoo&&num(x.preco)<=num(c.alvoVoo);
+    const link=String(x.link||"").startsWith("https://")?` <a href="${esc(x.link)}" target="_blank" rel="noopener">Abrir oferta</a>`:"";
+    return`<tr><td>${dBR(x.data)}<span class="sub-line">${x.origem==="monitor"?"pelo monitor":"anotada"}</span></td><td>${esc(x.rota)}</td><td>${esc(x.cia)||"—"}${x.datas?`<span class="sub-line">${esc(x.datas)}</span>`:""}${x.obs?`<span class="sub-line">${esc(x.obs)}</span>`:""}${link}</td><td class="n">${brl(x.preco)}${ok?` <span class="tag go">no alvo</span>`:""}</td><td class="n">${brl(fam)}</td><td class="x">${delBtn("voos",x._id)}</td></tr>`}).join("")||`<tr><td colspan="6" class="empty">Nenhuma cotação ainda. Use “Anotar passagem” ou aguarde o monitor.</td></tr>`;
+
+  // orçamento
+  const byCat={};S.gastos.forEach(g=>byCat[g.cat]=(byCat[g.cat]||0)+emBRL(g));
+  const cats=$("#cats"),foco=document.activeElement&&document.activeElement.dataset.orc;
+  if(!foco)cats.innerHTML=CATS.map(k=>{const p=num((c.orc||{})[k]),g=byCat[k]||0,w=p?clamp(g/p*100):(g?100:0),over=p&&g>p;
+    return`<div class="cat"><b>${k}</b><div class="tr" role="img" aria-label="${brl(g)} de ${brl(p)}"><i class="${over?"over":""}" style="width:${w}%"></i></div><div class="use">${brl(g)} usados${p?` de ${brl(p)}`:""}${over?`, ${brl(g-p)} acima do plano`:""}</div><label class="plan"><span class="affix"><span>R$</span><input type="number" step="100" min="0" aria-label="Planejado para ${k}" data-orc="${k}" value="${p||""}" ${canWrite?"":"disabled"}></span></label></div>`}).join("");
+  $("#oPlan").textContent=brl(plan);$("#oComp").textContent=brl(comp);$("#oFalta").textContent=brl(Math.max(0,plan-comp));
+
+  // gastos
+  $("#gPago").textContent=brl(pago);$("#gRes").textContent=brl(comp-pago);
+  $("#tGasto tbody").innerHTML=[...S.gastos].sort((a,b)=>String(b.data).localeCompare(a.data)).map(g=>`<tr><td>${dBR(g.data)}</td><td>${esc(g.descricao)}</td><td>${esc(g.cat)}</td><td><span class="tag ${g.status==="pago"?"go":"amber"}">${g.status==="pago"?"pago":"a pagar"}</span></td><td class="n">${g.moeda==="EUR"?eur(g.valor):brl2(g.valor)}</td><td class="n">${brl(emBRL(g))}</td><td class="x">${delBtn("gastos",g._id)}</td></tr>`).join("")||`<tr><td colspan="7" class="empty">Nada lançado ainda. Comece pelos passaportes e pelo seguro viagem quando contratar.</td></tr>`;
+
+  // poupança
+  $("#pTot").textContent=brl(dep);$("#pSaldo").textContent=brl(dep-pago-eCusto);
+  $("#tDep tbody").innerHTML=[...S.deps].sort((a,b)=>String(b.data).localeCompare(a.data)).map(x=>`<tr><td>${dBR(x.data)}</td><td>${esc(x.nota)||"—"}</td><td class="n">${brl2(x.valor)}</td><td class="x">${delBtn("depositos",x._id)}</td></tr>`).join("")||`<tr><td colspan="4" class="empty">Nenhum depósito ainda. Cada valor guardado para a viagem entra aqui.</td></tr>`;
+
+  // checklist
+  const prog=S.todos.filter(t=>!t.feito).sort((a,b)=>String(a.prazo||"9999").localeCompare(String(b.prazo||"9999"))||(num(a.ordem)-num(b.ordem)));
+  const real=S.todos.filter(t=>t.feito).sort((a,b)=>String(b.concluida_em||"").localeCompare(String(a.concluida_em||""))||(num(b.ordem)-num(a.ordem)));
+  const atras=prog.filter(t=>diasAte(t.prazo)!==null&&diasAte(t.prazo)<0).length,semana=prog.filter(t=>{const n=diasAte(t.prazo);return n!==null&&n>=0&&n<=7}).length;
+  $("#todoProg").textContent=!S.todos.length?"Lance as atividades da viagem com a data limite; a lista se organiza sozinha pela data.":!prog.length?"Tudo realizado.":`${prog.length} programada${prog.length>1?"s":""}.${atras?` ${atras} com a data limite vencida.`:""}${semana?` ${semana} vence${semana>1?"m":""} nos próximos 7 dias.`:""}`;
+  $("#ckN").textContent=real.length;$("#ckDe").textContent=`de ${S.todos.length} realizadas`;$("#ckBar").style.width=(S.todos.length?real.length/S.todos.length*100:0)+"%";
+  $("#cntReal").textContent=real.length;
+  const dis=canWrite?"":"disabled",MES=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"],anoAtual=today().slice(0,4);
+  const grupo=t=>{const n=diasAte(t.prazo);return n===null?"none":n<0?"late":n<=7?"week":n<=30?"month":"later"};
+  const GN={late:"Atrasadas",week:"Próximos 7 dias",month:"Próximos 30 dias",later:"Mais adiante",none:"Sem data limite"};
+  const chip=t=>{const g=grupo(t),id=esc(t._id),v=esc(String(t.prazo||"").slice(0,10));
+    const cara=t.prazo?(()=>{const[y,m,d]=String(t.prazo).slice(0,10).split("-");return`<b>${d}</b><span>${MES[+m-1]}${y!==anoAtual?" "+y.slice(2):""}</span>`})():`<b>+</b><span>data</span>`;
+    return`<span class="ck-chipw"><button type="button" class="ck-chip ${g==="month"?"":g}" data-pick="${id}" ${dis} aria-label="${t.prazo?`Alterar data limite, hoje ${dBR(t.prazo)}`:"Definir data limite"}">${cara}</button><input type="date" class="prazo ck-hidden" data-prazo="${id}" value="${v}" tabindex="-1" aria-hidden="true" ${dis}></span>`};
+  let html="",ult="";
+  for(const t of prog){const g=grupo(t);if(g!==ult){html+=`<h3 class="ck-group ${g}">${GN[g]} <span class="n">${prog.filter(x=>grupo(x)===g).length}</span></h3>`;ult=g}
+    html+=`<div class="ck-item"><input type="checkbox" class="ck-box" data-todo="${esc(t._id)}" ${dis} aria-label="Marcar como realizada: ${esc(t.txt)}">${chip(t)}<div class="ck-body"><span class="txt">${esc(t.txt)}</span>${t.prazo?prazoTxt(t):""}</div><span class="x">${delBtn("tarefas",t._id)}</span></div>`}
+  $("#todos").innerHTML=html||`<p class="ck-empty">${S.todos.length?"Nenhuma atividade programada. Lance a próxima acima.":"Nenhuma atividade ainda. Lance a primeira acima."}</p>`;
+  $("#todosReal").innerHTML=real.map(t=>`<div class="ck-done"><input type="checkbox" class="ck-box" data-todo="${esc(t._id)}" checked ${dis} aria-label="Voltar para programadas: ${esc(t.txt)}"><span class="txt">${esc(t.txt)}</span><span class="when">${t.concluida_em?`Realizada em ${dBR(new Date(t.concluida_em).toLocaleDateString("sv-SE"))}`:"Realizada"}</span><span class="x">${delBtn("tarefas",t._id)}</span></div>`).join("")||`<p class="ck-empty">Ao marcar uma atividade como realizada, ela vem para cá.</p>`;
+
+  // ajustes
+  const f=$("#fCfg");if(!f.dataset.touched)["ida","volta","origem","destinos","adultos","bebes","meta","alvoEuro","alvoVoo","metaEuro","spread"].forEach(k=>{f.elements[k].value=c[k]||c[k]===0&&k==="bebes"?c[k]:""});
+  prev()}
+
+// prévias do diálogo
+function prev(){
+  const fe=$("#fEuro"),e=num(fe.eur.value),t=num(fe.taxa.value),cn=eurNow();
+  $("#prevEuro").innerHTML=e&&t?`Custo: <b>${brl2(e*t)}</b>. Nova média: <b>${brl2((S.euros.reduce((a,x)=>a+num(x.eur)*num(x.taxa),0)+e*t)/(S.euros.reduce((a,x)=>a+num(x.eur),0)+e))}</b>.`:(()=>{const OH=ofertasHoje(),bo=OH.recente?OH.xs[0]:null;return bo?`Hoje o menor custo final é <b>${brl2(bo.vet)}</b> em ${esc(bo.fornecedor)} (${esc(TIPO[bo.tipo]||bo.tipo)}).`:cn?`Hoje o comercial está em ${brl2(cn)}; com o acréscimo, a compra deve sair perto de <b>${brl2(cn*(1+spr()/100))}</b>.`:"Informe os euros e a taxa para ver o custo."})();
+  const fg=$("#fGasto"),v=num(fg.valor.value),m=fg.querySelector("[name=moeda]:checked").value;
+  $("#prevGasto").innerHTML=m==="EUR"?(v&&cn?`Em reais: <b>${brl(v*cn)}</b>, pela cotação de hoje (${brl2(cn)}).`:"Valores em euro são convertidos pela cotação de hoje."):(v?`Entra no orçamento de <b>${esc(fg.cat.value)}</b>.`:"Informe o valor para ver onde ele entra.");
+  const fv=$("#fVoo"),p=num(fv.preco.value),c=S.cfg,ad=num(c.adultos)||2,bb=num(c.bebes);
+  $("#prevVoo").innerHTML=p?`Família: cerca de <b>${brl(p*ad+p*0.1*bb)}</b>${c.alvoVoo?`; ${p<=num(c.alvoVoo)?"dentro":"acima"} do alvo de ${brl(c.alvoVoo)}`:""}.`:"Informe o preço por adulto para ver o total da família."}
+
+const dlg=$("#novo");
+function aba(t){document.querySelectorAll("[data-aba]").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.aba===t)));
+  dlg.querySelectorAll("form").forEach(f=>f.hidden=f.dataset.form!==t);prev();
+  const f=dlg.querySelector(`form[data-form="${t}"]`);f&&f.querySelector("input:not([type=radio]),select").focus()}
+function abrir(t){if(!canWrite){toast("Seu e-mail ainda não tem acesso para salvar.",true);return}dlg.showModal();aba(t)}
+dlg.addEventListener("input",e=>{if(e.target.name==="onde"&&e.target.form.id==="fEuro"){const tx=e.target.form.taxa,OH=ofertasHoje(),o=OH.recente&&OH.xs.find(x=>x.fornecedor.toLowerCase()===e.target.value.trim().toLowerCase());if(o&&!tx.value)tx.value=num(o.vet)}prev()});dlg.addEventListener("change",prev);
+dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
+
+// avisos
+let tt=null;function toast(t,err){const el=$("#toast");el.textContent=t;el.className="on"+(err?" err":"");clearTimeout(tt);tt=setTimeout(()=>el.className=err?"err":"",err?6000:3200)}
+const msg=t=>{if(!t)return;if($("#app").hidden)$("#gateMsg").textContent=t;else toast(t,/erro|não foi|não tem/i.test(t))};
+
+// dados
+const TABS={cambio:"cambio",voos:"voos",alertas:"alertas",gastos:"gastos",depositos:"deps",euros:"euros",tarefas:"todos",ofertas_euro:"ofertas"};
+const VAZIO=()=>({cfg:{},cambio:[],voos:[],alertas:[],gastos:[],deps:[],euros:[],todos:[],ofertas:[]});
+const list=rows=>(rows||[]).map(r=>({...r,_id:r.id}));
+async function load(t){let q=sb.from(t).select("*");
+  if(t==="alertas")q=q.order("data",{ascending:false}).order("criado_em",{ascending:false}).limit(20);
+  else if(t==="cambio"||t==="euros")q=q.order("data").order("criado_em");
+  else if(t==="ofertas_euro")q=q.order("data",{ascending:false}).order("vet").limit(300);
+  const{data,error}=await q;if(error)throw error;S[TABS[t]]=list(data)}
+async function loadCfg(){const{data,error}=await sb.from("cfg").select("dados").eq("id","main").maybeSingle();if(error)throw error;S.cfg=data?.dados||{}}
+async function loadAll(){try{await Promise.all([loadCfg(),...Object.keys(TABS).map(load)]);render()}catch(e){msg("Erro ao ler os dados: "+(e&&e.message||e))}}
+async function write(fn){if(!sb||!sess){msg("Entre com seu e-mail para salvar.");return false}
+  if(!canWrite){msg("Seu e-mail ainda não tem acesso para salvar.");return false}
+  const{error}=await fn();if(error){msg("Não foi possível salvar: "+error.message);return false}
+  await loadAll();return true}
+
+// acesso
+function view(){const ok=!!(sess&&canWrite);$("#gate").hidden=ok;$("#app").hidden=!ok;
+  $("#who").innerHTML=sess?`<span>${esc(sess.user.email)}</span><button type="button" class="ghost" data-sair>Sair</button>`:"";
+  const a=$("#auth");
+  if(sess&&!canWrite)a.innerHTML=`<div class="acts"><button type="button" class="sec" data-sair>Sair e usar outro e-mail</button></div>`;
+  else if(!sess&&sb)a.innerHTML=`<form id="fLogin"><label class="f">E-mail<input name="email" type="email" autocomplete="email" required></label><label class="f">Senha<input name="senha" type="password" autocomplete="current-password" minlength="6" required><small style="color:#B9CDD3">Primeira vez? Escolha uma senha de 6 caracteres ou mais e use “Criar conta”.</small></label><div class="acts"><button name="modo" value="entrar">Entrar</button><button name="modo" value="criar" class="sec">Criar conta</button></div></form>`;
+  else if(!sess)a.innerHTML=""}
+async function login(v,modo){const email=String(v.email||"").trim().toLowerCase(),password=String(v.senha||"");$("#gateMsg").textContent=modo==="criar"?"Criando conta…":"Entrando…";
+  const r=modo==="criar"?await sb.auth.signUp({email,password}):await sb.auth.signInWithPassword({email,password});
+  if(r.error){$("#gateMsg").textContent=r.error.message==="Invalid login credentials"?"E-mail ou senha incorretos. Confira e tente de novo.":r.error.message;return}
+  if(modo==="criar"&&!r.data.session)$("#gateMsg").textContent="Conta criada. Confirme pelo link enviado ao e-mail e depois entre."}
+
+let ch=null,rt=null,lastUid=null;
+function assinar(){if(ch)return;ch=sb.channel("viagem");
+  ["cfg",...Object.keys(TABS)].forEach(t=>ch.on("postgres_changes",{event:"*",schema:"public",table:t},()=>{clearTimeout(rt);rt=setTimeout(loadAll,400)}));
+  ch.subscribe()}
+async function onSess(s){sess=s;
+  if(!s){lastUid=null;if(ch){sb.removeChannel(ch);ch=null}Object.assign(S,VAZIO());canWrite=false;view();$("#gateMsg").textContent="";return}
+  if(lastUid===s.user.id){view();return}lastUid=s.user.id;$("#gateMsg").textContent="Carregando dados…";view();
+  const{data:m,error}=await sb.rpc("e_membro");canWrite=!error&&m===true;
+  if(!canWrite){view();$("#gateMsg").textContent=error?"Erro ao verificar o acesso: "+error.message:`O e-mail ${s.user.email} ainda não tem acesso a este painel. Peça para incluí-lo na lista de membros.`;return}
+  $("#gateMsg").textContent="";await loadAll();view();render();assinar()}
+
+// eventos
+const FEITO={fDep:"Depósito registrado.",fEuro:"Compra de euro registrada.",fGasto:"Gasto lançado.",fVoo:"Passagem anotada.",fTodo:"Atividade adicionada."};
+document.addEventListener("submit",async ev=>{const f=ev.target;ev.preventDefault();const v=Object.fromEntries(new FormData(f));let ok=false;
+  if(f.id==="fLogin"){await login(v,ev.submitter&&ev.submitter.value);return}
+  if(f.id==="fEuro")ok=await write(()=>sb.from("euros").insert({data:today(),eur:num(v.eur),taxa:num(v.taxa),onde:v.onde||"",comercial_dia:eurNow()||null}));
+  if(f.id==="fVoo")ok=await write(()=>sb.from("voos").insert({data:today(),rota:v.rota,cia:v.cia||"",preco:num(v.preco),datas:v.datas||"",origem:"manual"}));
+  if(f.id==="fGasto")ok=await write(()=>sb.from("gastos").insert({data:today(),descricao:v.desc,cat:v.cat,valor:num(v.valor),moeda:v.moeda,taxa:v.moeda==="EUR"?eurNow():0,status:v.status}));
+  if(f.id==="fDep")ok=await write(()=>sb.from("depositos").insert({data:today(),valor:num(v.valor),nota:v.nota||""}));
+  if(f.id==="fTodo")ok=await write(()=>sb.from("tarefas").insert({txt:v.txt,feito:false,ordem:Date.now(),prazo:v.prazo||null}));
+  if(f.id==="fCfg"){const n={...S.cfg};["ida","volta","origem","destinos"].forEach(k=>n[k]=v[k]);["adultos","bebes","meta","alvoEuro","alvoVoo","metaEuro","spread"].forEach(k=>n[k]=num(v[k]));
+    ok=await write(()=>sb.from("cfg").upsert({id:"main",dados:n,atualizado_em:new Date().toISOString()}));if(ok){delete f.dataset.touched;render();toast("Ajustes salvos.")}return}
+  if(ok){f.reset();if(f.closest("dialog"))dlg.close();toast(FEITO[f.id]||"Salvo.")}});
+$("#fCfg").addEventListener("input",e=>e.currentTarget.dataset.touched="1");
+document.addEventListener("click",async ev=>{const b=ev.target.closest("button");if(!b)return;
+  if(b.hasAttribute("data-sair")){await sb.auth.signOut();return}
+  if(b.dataset.novo){abrir(b.dataset.novo);return}
+  if(b.dataset.pick){const inp=document.querySelector(`input[data-prazo="${CSS.escape(b.dataset.pick)}"]`);if(inp){try{inp.showPicker()}catch(e){inp.style.pointerEvents="auto";inp.focus();inp.click()}}return}
+  if(b.dataset.aba){aba(b.dataset.aba);return}
+  if(b.id==="fechar"){dlg.close();return}
+  if(b.dataset.del){ev.preventDefault();if(b.dataset.armed!=="1"){b.dataset.armed="1";b.textContent="Confirmar exclusão";b.classList.add("warn");setTimeout(()=>{if(b.isConnected){b.dataset.armed="";b.textContent="Excluir";b.classList.remove("warn")}},4000);return}
+    if(await write(()=>sb.from(b.dataset.del).delete().eq("id",b.dataset.id)))toast("Excluído.");return}
+  if(b.dataset.lido)await write(()=>sb.from("alertas").update({lido:true}).eq("id",b.dataset.lido))});
+document.addEventListener("change",async ev=>{const t=ev.target;
+  if(t.dataset.todo){const ok=t.checked;if(await write(()=>sb.from("tarefas").update({feito:ok,concluida_em:ok?new Date().toISOString():null}).eq("id",t.dataset.todo)))toast(ok?"Atividade movida para realizadas.":"Atividade voltou para as programadas.")}
+  if(t.dataset.prazo&&(document.activeElement!==t||Number(t.value.slice(0,4))>=2020))await salvarPrazo(t)});
+async function salvarPrazo(t){const atual=S.todos.find(x=>x._id===t.dataset.prazo),novo=t.value||null;
+  if(!atual||String(atual.prazo||"").slice(0,10)===String(novo||"")){if(document.activeElement!==t)render();return}
+  if(await write(()=>sb.from("tarefas").update({prazo:novo}).eq("id",t.dataset.prazo))){if(t.isConnected)t.blur();render();toast(novo?`Data limite definida para ${dBR(novo)}. A lista foi reorganizada.`:"Data limite removida.")}}
+document.addEventListener("focusout",ev=>{const t=ev.target;if(t.dataset&&t.dataset.prazo)setTimeout(()=>salvarPrazo(t),0)});
+document.addEventListener("change",async ev=>{const t=ev.target;
+  if(t.dataset.orc){const orc={...(S.cfg.orc||{})};orc[t.dataset.orc]=num(t.value);t.blur();if(await write(()=>sb.from("cfg").upsert({id:"main",dados:{...S.cfg,orc},atualizado_em:new Date().toISOString()})))toast(`Planejado de ${t.dataset.orc} salvo.`)}});
+
+(async()=>{view();
+  if(SUPABASE_KEY.startsWith("COLE_")){$("#gateMsg").textContent="Falta configurar a chave pública do Supabase no index.html.";return}
+  try{const{createClient}=await import("https://esm.sh/@supabase/supabase-js@2");sb=createClient(SUPABASE_URL,SUPABASE_KEY)}
+  catch(e){$("#gateMsg").textContent="Não foi possível conectar ao banco de dados. Verifique a internet e recarregue a página.";return}
+  view();
+  sb.auth.onAuthStateChange((_e,s)=>{setTimeout(()=>onSess(s),0)});
+})();
+}
+</script>
+</body>
+</html>
